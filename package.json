@@ -1,0 +1,12 @@
+{
+  "name": "fleek-chatbox-widget",
+  "version": "0.1.0",
+  "description": "A standalone chatbox widget for Fleek agents",
+  "main": "src/chatbox.js",
+  "scripts": {
+    "start": "npx live-server --open=test/index.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
