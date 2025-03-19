@@ -1,4 +1,4 @@
-# chatbox-widget
+# fleek-chatbox-widget
 a standalone JS widget that allows users to embed a chatbox on any website to interact with a Fleek agent.
 
 ## overview
