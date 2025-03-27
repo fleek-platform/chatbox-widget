@@ -1,6 +1,11 @@
-export function getScriptParams() {
+import { Message, ScriptParams } from './types.js';
+
+export function getScriptParams(): ScriptParams {
   try {
-    const script = document.currentScript || document.querySelector('script[src*="chatbox.js"]');
+    const script = (document.currentScript ||
+      document.querySelector(
+        'script[src*="chatbox.js"]'
+      )) as HTMLScriptElement | null;
     if (!script) {
       console.error('No script tag found for chatbox.js');
       return { agentId: null, apiKey: null };
@@ -18,13 +23,13 @@ export function getScriptParams() {
   }
 }
 
-export function loadMessages(agentId) {
+export function loadMessages(agentId: string): Message[] {
   console.log('Loading messages for agentId:', agentId);
   const messages = localStorage.getItem(`chatbox-messages-${agentId}`);
   return messages ? JSON.parse(messages) : [];
 }
 
-export function saveMessages(agentId, messages) {
+export function saveMessages(agentId: string, messages: Message[]): void {
   console.log('Saving messages for agentId:', agentId);
   localStorage.setItem(`chatbox-messages-${agentId}`, JSON.stringify(messages));
 }

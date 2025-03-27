@@ -7,10 +7,20 @@
   "scripts": {
     "build": "rollup -c",
     "start": "npm run build && npx live-server --open=test/index.html",
-    "dev": "rollup -c --watch & npx live-server --open=test/index.html"
+    "dev": "rollup -c --watch & npx live-server --open=test/index.html",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"test/**/*.{html}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\" \"test/**/*.{html}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "lint:check": "eslint \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
-    "live-server": "^1.2.2",
-    "rollup": "^4.24.0"
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^10.1.1",
+    "prettier": "^3.5.3",
+    "tslib": "^2.6.0",
+    "typescript": "^5.0.0"
   }
 }

@@ -1,4 +1,4 @@
-export function addStyles() {
+export function addStyles(): void {
   const styleSheet = document.createElement('style');
   styleSheet.textContent = `
     .typing-dots span {

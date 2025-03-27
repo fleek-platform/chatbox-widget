@@ -1,4 +1,9 @@
-export function initUI(agentId, apiKey) {
+import { UIComponents } from './types.js';
+
+export function initUI(
+  agentId: string | null,
+  apiKey: string | null
+): UIComponents | Record<string, never> {
   if (!agentId || !apiKey) {
     console.error('Missing agentId or apiKey in script parameters');
     return {};
@@ -6,11 +11,9 @@ export function initUI(agentId, apiKey) {
 
   console.log('Initializing chatbox with agentId:', agentId);
 
-  // Dummy agent data (replace with API call later)
-  const agent = { name: "Test Agent", avatar: "https://picsum.photos/38" };
-  const user = { name: "You", avatar: "https://picsum.photos/38" };
+  const agent = { name: 'Test Agent', avatar: 'https://picsum.photos/38' };
+  const user = { name: 'You', avatar: 'https://picsum.photos/38' };
 
-  // Create chatbox container
   const chatbox = document.createElement('div');
   chatbox.className = 'fleek-chatbox';
   chatbox.style.cssText = `
@@ -20,9 +23,7 @@ export function initUI(agentId, apiKey) {
     font-family: Arial, sans-serif;
     z-index: 10000;
   `;
-  console.log('Chatbox element created');
 
-  // Floating toggle button
   const toggleButton = document.createElement('button');
   toggleButton.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -52,7 +53,6 @@ export function initUI(agentId, apiKey) {
     toggleButton.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
   };
 
-  // Chat window
   const chatWindow = document.createElement('div');
   chatWindow.style.cssText = `
     display: none;
@@ -69,7 +69,6 @@ export function initUI(agentId, apiKey) {
     transition: opacity 0.3s ease, transform 0.3s ease;
   `;
 
-  // Header
   const header = document.createElement('div');
   header.style.cssText = `
     padding: 16px 20px;
@@ -105,7 +104,6 @@ export function initUI(agentId, apiKey) {
   header.appendChild(headerTitle);
   header.appendChild(closeButton);
 
-  // Messages container
   const messagesContainer = document.createElement('div');
   messagesContainer.style.cssText = `
     flex-grow: 1;
@@ -117,7 +115,6 @@ export function initUI(agentId, apiKey) {
     background: #f9fafb;
   `;
 
-  // Input area
   const inputContainer = document.createElement('div');
   inputContainer.style.cssText = `
     padding: 12px 16px;
@@ -145,8 +142,12 @@ export function initUI(agentId, apiKey) {
     background: #f9fafb;
     transition: border-color 0.2s ease;
   `;
-  textarea.onfocus = () => { textarea.style.borderColor = '#3b82f6'; };
-  textarea.onblur = () => { textarea.style.borderColor = '#d1d5db'; };
+  textarea.onfocus = () => {
+    textarea.style.borderColor = '#3b82f6';
+  };
+  textarea.onblur = () => {
+    textarea.style.borderColor = '#d1d5db';
+  };
   const sendButton = document.createElement('button');
   sendButton.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -166,10 +167,13 @@ export function initUI(agentId, apiKey) {
     justify-content: center;
     transition: background 0.2s ease;
   `;
-  sendButton.onmouseover = () => { sendButton.style.background = '#2563eb'; };
-  sendButton.onmouseout = () => { sendButton.style.background = '#3b82f6'; };
+  sendButton.onmouseover = () => {
+    sendButton.style.background = '#2563eb';
+  };
+  sendButton.onmouseout = () => {
+    sendButton.style.background = '#3b82f6';
+  };
 
-  // Assemble UI
   chatbox.appendChild(toggleButton);
   chatbox.appendChild(chatWindow);
   chatWindow.appendChild(header);
@@ -178,12 +182,18 @@ export function initUI(agentId, apiKey) {
   inputContainer.appendChild(textarea);
   inputContainer.appendChild(sendButton);
   document.body.appendChild(chatbox);
-  console.log('Chatbox appended to document.body');
 
-  return { chatbox, toggleButton, chatWindow, messagesContainer, textarea, sendButton };
+  return {
+    chatbox,
+    toggleButton,
+    chatWindow,
+    messagesContainer,
+    textarea,
+    sendButton,
+  };
 }
 
-export function toggleChatWindow(chatWindow) {
+export function toggleChatWindow(chatWindow: HTMLDivElement): void {
   console.log('Toggle button clicked');
   if (chatWindow.style.display === 'none') {
     chatWindow.style.display = 'flex';
@@ -194,6 +204,8 @@ export function toggleChatWindow(chatWindow) {
   } else {
     chatWindow.style.opacity = '0';
     chatWindow.style.transform = 'translateY(20px)';
-    setTimeout(() => { chatWindow.style.display = 'none'; }, 300);
+    setTimeout(() => {
+      chatWindow.style.display = 'none';
+    }, 300);
   }
 }
