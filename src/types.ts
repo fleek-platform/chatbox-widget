@@ -29,6 +29,7 @@ export interface UIComponents {
 export interface ScriptParams {
   agentId: string | null; // Fleek agent ID from script tag
   apiKey: string | null; // API key for BE proxy
+  colors?: Record<string, string>; // Color overrides
 }
 
 export interface AgentResponse {

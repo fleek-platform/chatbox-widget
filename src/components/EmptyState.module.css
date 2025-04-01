@@ -1,0 +1,36 @@
+.emptyContainer {
+  text-align: center;
+  color: var(--neutral-10);
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  max-width: 80%;
+}
+
+.iconContainer {
+  color: var(--neutral-9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--neutral-5);
+  margin-bottom: 8px;
+}
+
+.message {
+  color: var(--neutral-12);
+  font-weight: 500;
+  margin: 0;
+  font-style: italic;
+}
+
+.hint {
+  color: var(--neutral-9);
+  font-size: 12px;
+  margin: 0;
+}

@@ -1,47 +1,32 @@
-import { getScriptParams } from './utils.js';
-import { initUI, toggleChatWindow } from './ui.js';
-import { initMessageHandler } from './messageHandler.js';
-import { addStyles } from './styles.js';
-import { ApiClient, createDummyApiClient } from './api.js';
-import { UIComponents } from './types.js';
+import { render, h } from 'preact';
+import { getScriptParams, applyColorOverrides } from './utils.js';
+import { ChatboxWidget } from './components/ChatboxWidget.js';
 
-console.log('Chatbox script loaded');
+import './global.css';
+
+console.log('Chatbox script loaded (Preact version)');
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM fully loaded');
 
-  addStyles();
+  const { agentId, apiKey, colors } = getScriptParams();
 
-  const { agentId, apiKey } = getScriptParams();
-
-  const uiComponents: UIComponents | Record<string, never> = initUI(
-    agentId,
-    apiKey
-  );
-  if (Object.keys(uiComponents).length === 0) return;
-
-  const { toggleButton, chatWindow, messagesContainer, textarea, sendButton } =
-    uiComponents as UIComponents;
-
-  toggleButton.onclick = () => toggleChatWindow(chatWindow);
-  const closeButton = chatWindow.querySelector(
-    'button[aria-label="close"]'
-  ) as HTMLButtonElement;
-  closeButton.onclick = () => toggleChatWindow(chatWindow);
-
-  // Force dummy client for now since BE isn't ready
-  const apiClient = createDummyApiClient();
-  console.log('Using ApiClient:', apiClient); // Debug log
-
-  if (agentId) {
-    initMessageHandler(
-      agentId,
-      apiClient,
-      messagesContainer,
-      textarea,
-      sendButton
+  if (!agentId || !apiKey) {
+    console.error(
+      'Fleek Chatbox: Missing agentId or apiKey in script parameters. Cannot initialize.',
     );
-  } else {
-    console.error('No agentId provided');
+    return;
   }
+
+  const container = document.createElement('div');
+  container.id = 'fleek-chatbox-container';
+  document.body.appendChild(container);
+
+  // Apply color overrides if provided
+  if (colors && Object.keys(colors).length > 0) {
+    applyColorOverrides(container, colors);
+  }
+
+  console.log(`Initializing ChatboxWidget with agentId: ${agentId}`);
+  render(h(ChatboxWidget, { agentId, apiKey, colors }), container);
 });

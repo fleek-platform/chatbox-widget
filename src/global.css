@@ -1,0 +1,107 @@
+:root {
+  /* ------ FLEEK PRIMITIVES ------ */
+  /* Neutral */
+  --neutral-1: #111111;
+  --neutral-2: #191919;
+  --neutral-3: #222222;
+  --neutral-4: #2a2a2a;
+  --neutral-5: #313131;
+  --neutral-6: #3a3a3a;
+  --neutral-7: #484848;
+  --neutral-8: #606060;
+  --neutral-9: #6e6e6e;
+  --neutral-10: #7b7b7b;
+  --neutral-11: #b4b4b4;
+  --neutral-12: #eeeeee;
+
+  /* Accent */
+  --accent-1: #14120b;
+  --accent-2: #1b180f;
+  --accent-3: #2d2305;
+  --accent-4: #362b00;
+  --accent-5: #433500;
+  --accent-6: #524202;
+  --accent-7: #665417;
+  --accent-8: #836a21;
+  --accent-9: #ffe629;
+  --accent-10: #ffff57;
+  --accent-11: #f5e147;
+  --accent-12: #f6eeb4;
+
+  /* Warning */
+  --warning-1: #16120c;
+  --warning-2: #1d180f;
+  --warning-3: #302008;
+  --warning-4: #3f2700;
+  --warning-5: #4d3000;
+  --warning-6: #5c3d05;
+  --warning-7: #714f19;
+  --warning-8: #8f6424;
+  --warning-9: #ffc53d;
+  --warning-10: #ffd60a;
+  --warning-11: #ffca16;
+  --warning-12: #ffe7b3;
+
+  /* ------ FLEEK TOKENS ------ */
+  /* ------ SPACING ------ */
+  --spacing-0: 0;
+  --spacing-1: 4px;
+  --spacing-2: 6px;
+  --spacing-2-5: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 36px;
+  --spacing-8: 48px;
+  --spacing-9: 56px;
+  --spacing-99: 175px;
+
+  /* ------ RADIUS ------ */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-3xl: 360px;
+
+  /* ------ SIZING ------ */
+  --sizing-2xs: 10px;
+  --sizing-xs: 12px;
+  --sizing-sm: 14px;
+  --sizing-md: 16px;
+  --sizing-lg: 18px;
+  --sizing-xl: 20px;
+  --sizing-2xl: 26px;
+  --sizing-3xl: 34px;
+  --sizing-4xl: 48px;
+  --sizing-5xl: 76px;
+
+  /* Base Theme Colors */
+  --color-primary: #708cff;
+
+  --color-error: #ef4444;
+  --color-error-bg: rgba(91, 83, 83, 0.1);
+
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+
+  --toggle-btn-size: 40px;
+  --toggle-btn-color: var(--color-primary);
+}
+
+#fleek-chatbox-container * {
+  box-sizing: border-box;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#fleek-chatbox-container {
+  all: initial; /* Reset styles */
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: normal;
+  color: var(--neutral-12); /* Apply base text color */
+}
