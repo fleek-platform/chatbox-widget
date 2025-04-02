@@ -8,7 +8,7 @@ export function initMessageHandler(
   apiClient: ApiClient,
   messagesContainer: HTMLDivElement,
   textarea: HTMLTextAreaElement,
-  sendButton: HTMLButtonElement,
+  sendButton: HTMLButtonElement
 ): void {
   // Initialize with placeholder agent data; will be updated after fetch
   let agent: Agent = {
@@ -26,7 +26,7 @@ export function initMessageHandler(
   // Fetch agent details on initialization
   apiClient
     .fetchAgentDetails(agentId)
-    .then((agentData) => {
+    .then(agentData => {
       agent = {
         ...agent,
         name: agentData.name,
@@ -35,7 +35,7 @@ export function initMessageHandler(
       };
       renderMessages();
     })
-    .catch((err) => {
+    .catch(err => {
       error = err;
       renderMessages();
     });
@@ -63,7 +63,7 @@ export function initMessageHandler(
         error = null;
         apiClient
           .fetchAgentDetails(agentId)
-          .then((agentData) => {
+          .then(agentData => {
             agent = {
               ...agent,
               name: agentData.name,
@@ -72,7 +72,7 @@ export function initMessageHandler(
             };
             renderMessages();
           })
-          .catch((err) => {
+          .catch(err => {
             error = err;
             renderMessages();
           });
@@ -116,7 +116,7 @@ export function initMessageHandler(
       const timestampDiv = document.createElement('span');
       timestampDiv.textContent = new Date(msg.timestamp).toLocaleTimeString(
         [],
-        { hour: '2-digit', minute: '2-digit' },
+        { hour: '2-digit', minute: '2-digit' }
       );
       timestampDiv.style.cssText = 'font-size: 12px; color: #6b7280;';
       nameDiv.appendChild(nameSpan);
@@ -144,7 +144,7 @@ export function initMessageHandler(
     });
 
     const typingDiv = messagesContainer.querySelector(
-      '.typing-indicator',
+      '.typing-indicator'
     ) as HTMLDivElement | null;
     if (isAgentTyping) {
       if (!typingDiv) {
@@ -200,11 +200,11 @@ export function initMessageHandler(
       isAgentTyping = true;
       renderMessages();
       // Simulate network delay (remove when using real BE)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       const agentResponse = await apiClient.sendMessage(
         agentId,
         agent.elizaAgentId,
-        content,
+        content
       );
       const agentMessage: Message = {
         id: agentResponse.id,

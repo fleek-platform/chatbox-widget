@@ -1,8 +1,8 @@
-import type { UIComponents } from './types.js';
+import { UIComponents } from './types.js';
 
 export function initUI(
   agentId: string | null,
-  apiKey: string | null,
+  apiKey: string | null
 ): UIComponents | Record<string, never> {
   if (!agentId || !apiKey) {
     console.error('Missing agentId or apiKey in script parameters');

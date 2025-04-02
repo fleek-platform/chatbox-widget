@@ -9,10 +9,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "noImplicitAny": true,
-    "moduleResolution": "node",
-    // Added for Preact JSX support (enables .tsx files)
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
