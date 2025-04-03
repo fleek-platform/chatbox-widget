@@ -30,7 +30,7 @@
 }
 
 .container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -40,7 +40,7 @@
     to bottom,
     rgba(18, 18, 18, 0.9),
     /* We'll keep these as rgba values since they're specific to the gradient */
-      rgba(18, 18, 18, 0) /* and would be less clear as variables */
+    rgba(18, 18, 18, 0) /* and would be less clear as variables */
   );
   pointer-events: none;
   opacity: 0;
