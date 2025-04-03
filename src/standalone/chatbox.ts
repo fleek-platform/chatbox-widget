@@ -1,6 +1,6 @@
-import { render, h } from 'preact';
-import { getScriptParams, applyColorOverrides } from '../core/utils.js';
+import { h, render } from 'preact';
 import { ChatboxWidget } from '../components/ChatboxWidget.js';
+import { applyColorOverrides, getScriptParams } from '../core/utils.js';
 
 import '../global.css';
 

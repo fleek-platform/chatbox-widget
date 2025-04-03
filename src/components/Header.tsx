@@ -1,6 +1,6 @@
+import { Avatar } from './Avatar';
 import styles from './Header.module.css';
 import Cross from './icons/Cross';
-import { Avatar } from './Avatar';
 
 interface HeaderProps {
   agentName: string;

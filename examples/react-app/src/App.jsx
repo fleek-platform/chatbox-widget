@@ -1,5 +1,5 @@
-import React from 'react';
 import FleekChatbox from 'fleek-chatbox-widget';
+import React from 'react';
 
 function App() {
   return (

@@ -1,6 +1,6 @@
+import styles from './ToggleButton.module.css';
 import Cross from './icons/Cross';
 import Message from './icons/Message';
-import styles from './ToggleButton.module.css';
 
 interface ToggleButtonProps {
   isOpen: boolean;

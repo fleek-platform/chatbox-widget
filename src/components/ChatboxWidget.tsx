@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
+import { type ApiClient, createDummyApiClient } from '../core/api.js';
+import type { Message } from '../core/types.js';
+import { loadMessages, saveMessages } from '../core/utils.js';
+import { ChatWindow } from './ChatWindow.js';
 import styles from './ChatboxWidget.module.css';
 import { ToggleButton } from './ToggleButton.js';
-import { ChatWindow } from './ChatWindow.js';
-import type { Message } from '../core/types.js';
-import { type ApiClient, createDummyApiClient } from '../core/api.js';
-import { loadMessages, saveMessages } from '../core/utils.js';
 
 interface ChatboxWidgetProps {
   agentId: string;

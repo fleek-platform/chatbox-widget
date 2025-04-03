@@ -1,5 +1,5 @@
+import { h, render } from 'preact';
 import * as React from 'react';
-import { render, h } from 'preact';
 import { ChatboxWidget } from '../components/ChatboxWidget.js';
 
 // Import global CSS
