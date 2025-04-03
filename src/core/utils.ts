@@ -58,3 +58,4 @@ export function applyColorOverrides(
     console.log(`Applied color override: --${key}: ${value}`);
   }
 }
+// Test comment for pre-commit hook

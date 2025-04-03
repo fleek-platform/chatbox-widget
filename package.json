@@ -27,7 +27,8 @@
     "lint": "biome lint --apply .",
     "lint:check": "biome lint .",
     "check": "biome check --apply .",
-    "check:ci": "biome ci ."
+    "check:ci": "biome ci .",
+    "prepare": "husky"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -47,6 +48,8 @@
     "@typescript-eslint/parser": "^8.28.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^10.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "react": "^18.2.0",
@@ -58,5 +61,11 @@
   },
   "dependencies": {
     "preact": "^10.26.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "biome lint --apply",
+      "biome format --write"
+    ]
   }
 }
