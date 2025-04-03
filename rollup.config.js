@@ -1,10 +1,10 @@
+import alias from '@rollup/plugin-alias';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
-import resolve from '@rollup/plugin-node-resolve'; // Resolves node modules
-import commonjs from '@rollup/plugin-commonjs'; // Converts CommonJS modules to ES6
-import replace from '@rollup/plugin-replace'; // Replaces strings in files, used for env variables
-import postcss from 'rollup-plugin-postcss'; // Handles CSS imports and CSS Modules
-import terser from '@rollup/plugin-terser'; // Minifies the bundle
-import alias from '@rollup/plugin-alias'; // For aliasing modules
+import postcss from 'rollup-plugin-postcss';
 
 // Determine if this is a production build (you might set this via environment variable)
 const production = !process.env.ROLLUP_WATCH;
@@ -32,7 +32,7 @@ const createPlugins = (isNpmBuild = false) => [
   replace({
     preventAssignment: true,
     'process.env.NODE_ENV': JSON.stringify(
-      production ? 'production' : 'development'
+      production ? 'production' : 'development',
     ),
   }),
   // For npm builds, alias react to preact/compat
