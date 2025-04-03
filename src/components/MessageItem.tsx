@@ -1,7 +1,7 @@
-import styles from './MessageItem.module.css';
 import type { Message } from '../core/types';
 import { Avatar } from './Avatar';
 import { GenericAvatar } from './GenericAvatar';
+import styles from './MessageItem.module.css';
 
 interface MessageItemProps {
   message: Message;
