@@ -5,6 +5,11 @@ import replace from '@rollup/plugin-replace'; // Replaces strings in files, used
 import postcss from 'rollup-plugin-postcss'; // Handles CSS imports and CSS Modules
 import terser from '@rollup/plugin-terser'; // Minifies the bundle
 import alias from '@rollup/plugin-alias'; // For aliasing modules
+import { readFileSync } from 'node:fs';
+
+// Get package version for versioned builds
+const pkg = JSON.parse(readFileSync('./package.json', 'utf8'));
+const version = pkg.version;
 
 // Determine if this is a production build (you might set this via environment variable)
 const production = !process.env.ROLLUP_WATCH;
@@ -54,12 +59,20 @@ export default [
   // Standalone build (IIFE)
   {
     input: 'src/standalone/chatbox.ts',
-    output: {
-      file: 'dist/chatbox.js',
-      format: 'iife',
-      name: 'FleekChatbox',
-      sourcemap: !production,
-    },
+    output: [
+      {
+        file: 'dist/chatbox.js',
+        format: 'iife',
+        name: 'FleekChatbox',
+        sourcemap: !production,
+      },
+      {
+        file: `dist/chatbox-${version}.js`,
+        format: 'iife',
+        name: 'FleekChatbox',
+        sourcemap: !production,
+      },
+    ],
     plugins: createPlugins(false),
   },
   // NPM library build (ESM)

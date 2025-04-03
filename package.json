@@ -27,7 +27,12 @@
     "lint": "biome lint --apply .",
     "lint:check": "biome lint .",
     "check": "biome check --apply .",
-    "check:ci": "biome ci ."
+    "check:ci": "biome ci .",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "publish-packages": "changeset publish",
+    "prepare-gh-pages": "mkdir -p dist && cp -f dist/chatbox.js dist/index.html dist/package.json 2>/dev/null || :",
+    "release": "npm run build && npm run prepare-gh-pages"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -35,6 +40,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.28.1",
     "@rollup/plugin-alias": "^4.0.4",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
