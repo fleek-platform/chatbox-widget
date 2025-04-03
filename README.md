@@ -100,6 +100,41 @@ This creates the following files in the `dist/` directory:
 - `dist/index.cjs.js` - CommonJS module for npm package
 - `dist/index.d.ts` - TypeScript declarations
 
+## Versioning and Releases
+
+This project uses [Changesets](https://github.com/changesets/changesets) for versioning and automated releases.
+
+### How to Create a Release
+
+1. Make your changes to the codebase
+2. Add a changeset to describe your changes:
+   ```bash
+   npx changeset
+   ```
+3. Follow the prompts to select the type of change (major, minor, patch) and provide a description
+4. Commit the generated changeset file along with your code changes
+5. Create a pull request
+6. When the PR is merged to main, a GitHub Action will:
+   - Create a version PR if there are changesets
+   - When the version PR is merged:
+     - Update the version in package.json
+     - Update the CHANGELOG.md
+     - Publish to npm
+     - Deploy the standalone script to GitHub Pages
+
+### Accessing Versioned Builds
+
+For production use, we recommend using a specific version of the standalone script:
+
+```html
+<script
+  src="https://[username].github.io/[repo-name]/chatbox-1.0.0.js?agentId=YOUR_AGENT_ID&apiKey=YOUR_API_KEY"
+  async
+></script>
+```
+
+Replace `1.0.0` with the specific version you want to use.
+
 ## Usage Options
 
 ### Option 1: Standalone Script
@@ -267,14 +302,16 @@ Contributions to the Fleek Chatbox Widget are welcome! Here's how you can contri
 4. Run the linter: `npm run lint`
 5. Build the project: `npm run build`
 6. Test your changes
-7. Commit your changes: `git commit -m 'Add some feature'`
-8. Push to the branch: `git push origin feature/my-new-feature`
-9. Submit a pull request
+7. Add a changeset to describe your changes: `npx changeset`
+8. Commit your changes: `git commit -m 'Add some feature'`
+9. Push to the branch: `git push origin feature/my-new-feature`
+10. Submit a pull request
 
 ### Development Guidelines
 
 - Follow the existing code style
 - Write clear, descriptive commit messages
+- Always include a changeset for changes that affect functionality
 - Add tests for new features
 - Update documentation as needed
 

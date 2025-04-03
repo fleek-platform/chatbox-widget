@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
@@ -5,6 +6,10 @@ import replace from '@rollup/plugin-replace';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
+
+// Get package version for versioned builds
+const pkg = JSON.parse(readFileSync('./package.json', 'utf8'));
+const version = pkg.version;
 
 // Determine if this is a production build (you might set this via environment variable)
 const production = !process.env.ROLLUP_WATCH;
@@ -54,12 +59,20 @@ export default [
   // Standalone build (IIFE)
   {
     input: 'src/standalone/chatbox.ts',
-    output: {
-      file: 'dist/chatbox.js',
-      format: 'iife',
-      name: 'FleekChatbox',
-      sourcemap: !production,
-    },
+    output: [
+      {
+        file: 'dist/chatbox.js',
+        format: 'iife',
+        name: 'FleekChatbox',
+        sourcemap: !production,
+      },
+      {
+        file: `dist/chatbox-${version}.js`,
+        format: 'iife',
+        name: 'FleekChatbox',
+        sourcemap: !production,
+      },
+    ],
     plugins: createPlugins(false),
   },
   // NPM library build (ESM)
