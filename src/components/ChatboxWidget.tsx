@@ -2,17 +2,23 @@ import { useState, useEffect } from 'preact/hooks';
 import styles from './ChatboxWidget.module.css';
 import { ToggleButton } from './ToggleButton.js';
 import { ChatWindow } from './ChatWindow.js';
-import type { Message } from '../types.js';
-import { type ApiClient, createDummyApiClient } from '../api.js';
-import { loadMessages, saveMessages } from '../utils.js';
+import type { Message } from '../core/types.js';
+import { type ApiClient, createDummyApiClient } from '../core/api.js';
+import { loadMessages, saveMessages } from '../core/utils.js';
 
 interface ChatboxWidgetProps {
   agentId: string;
   apiKey: string;
   colors?: Record<string, string>;
+  useFixedPosition?: boolean;
 }
 
-export function ChatboxWidget({ agentId, apiKey, colors }: ChatboxWidgetProps) {
+export function ChatboxWidget({
+  agentId,
+  apiKey,
+  colors,
+  useFixedPosition = true,
+}: ChatboxWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -93,7 +99,9 @@ export function ChatboxWidget({ agentId, apiKey, colors }: ChatboxWidgetProps) {
   };
 
   return (
-    <div className={styles.chatboxWidget}>
+    <div
+      className={`${styles.chatboxWidget} ${useFixedPosition ? styles.fixedPosition : ''}`}
+    >
       <ToggleButton isOpen={isOpen} onClick={toggleChat} />
 
       {isOpen && (

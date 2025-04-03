@@ -1,5 +1,5 @@
 import styles from './MessageItem.module.css';
-import type { Message } from '../types.js';
+import type { Message } from '../core/types';
 import { Avatar } from './Avatar';
 import { GenericAvatar } from './GenericAvatar';
 

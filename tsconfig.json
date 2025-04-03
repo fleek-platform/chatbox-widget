@@ -12,7 +12,15 @@
     "moduleResolution": "node",
     // Added for Preact JSX support (enables .tsx files)
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    // Add declaration files for npm package
+    "declaration": true,
+    "declarationDir": "./dist",
+    // Path mapping for React compatibility
+    "paths": {
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

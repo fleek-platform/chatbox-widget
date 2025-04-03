@@ -1,8 +1,8 @@
 import styles from './ChatWindow.module.css';
-import { Header } from './Header.js';
-import { MessageList } from './MessageList.js';
-import { ChatInput } from './ChatInput.js';
-import type { Message } from '../types.js';
+import { Header } from './Header';
+import { MessageList } from './MessageList';
+import { ChatInput } from './ChatInput';
+import type { Message } from '../core/types';
 import FleekLogo from './icons/FleekLogo';
 
 interface ChatWindowProps {

@@ -1,6 +1,6 @@
 # Fleek Chatbox Widget
 
-A standalone widget that allows users to embed a chatbox on any website to interact with a Fleek agent. This lightweight, customizable widget can be easily integrated into any website with a simple script tag.
+A standalone widget that allows users to embed a chatbox on any website to interact with a Fleek agent. This lightweight, customizable widget can be easily integrated into any website with a simple script tag or imported as a React component.
 
 ## What is this project about?
 
@@ -11,10 +11,13 @@ The Fleek Chatbox Widget is a drop-in solution for adding AI chat capabilities t
 - Customizable appearance through CSS variables
 - Responsive design that works on both desktop and mobile devices
 - Lightweight implementation using Preact
+- Available as both a standalone script and a React component
 
 ![Chatbox Widget Demo](https://via.placeholder.com/600x400?text=Fleek+Chatbox+Widget)
 
 ## Installation
+
+### For Development
 
 To set up the project for development:
 
@@ -25,6 +28,13 @@ cd fleek-chatbox-widget
 
 # Install dependencies
 npm install
+```
+
+### For Usage in a React Project
+
+```bash
+# Install from npm
+npm install fleek-chatbox-widget
 ```
 
 ## Development
@@ -51,10 +61,17 @@ fleek-chatbox-widget/
 │   ├── components/     # UI components
 │   │   ├── icons/      # SVG icons as React components
 │   │   └── *.tsx       # Component files
-│   ├── chatbox.ts      # Main entry point
-│   ├── global.css      # Global styles and CSS variables
-│   ├── types.ts        # TypeScript type definitions
-│   └── utils.ts        # Utility functions
+│   ├── core/           # Core functionality
+│   │   ├── api.ts      # API client
+│   │   ├── types.ts    # TypeScript type definitions
+│   │   └── utils.ts    # Utility functions
+│   ├── npm/            # React/NPM package entry point
+│   │   └── index.ts    # NPM package entry
+│   ├── standalone/     # Standalone script
+│   │   └── chatbox.ts  # Standalone entry point
+│   └── global.css      # Global styles and CSS variables
+├── examples/           # Example usage
+│   ├── react-app/      # React example
 ├── test/               # Test files
 │   └── index.html      # Test page for development
 ├── package.json        # Project dependencies and scripts
@@ -66,17 +83,28 @@ fleek-chatbox-widget/
 To build the project for production:
 
 ```bash
-# Build for production
+# Build both standalone script and npm package
 npm run build
+
+# Build only the standalone script
+npm run build:standalone
+
+# Build only the npm package
+npm run build:npm
 ```
 
-This creates a minified bundle in the `dist/` directory:
+This creates the following files in the `dist/` directory:
 
-- `dist/chatbox.js` - The main script to be included on websites
+- `dist/chatbox.js` - The standalone script to be included on websites
+- `dist/index.esm.js` - ES module for npm package
+- `dist/index.cjs.js` - CommonJS module for npm package
+- `dist/index.d.ts` - TypeScript declarations
 
-## How to Use the Generated Script
+## Usage Options
 
-To add the Fleek Chatbox Widget to your website, include the script tag in your HTML:
+### Option 1: Standalone Script
+
+To add the Fleek Chatbox Widget to your website using the standalone script, include the script tag in your HTML:
 
 ```html
 <script
@@ -85,7 +113,7 @@ To add the Fleek Chatbox Widget to your website, include the script tag in your 
 ></script>
 ```
 
-### Required Parameters
+#### Required Parameters
 
 - `agentId`: Your Fleek agent ID
 - `apiKey`: Your API key for authentication
@@ -99,7 +127,53 @@ Example:
 ></script>
 ```
 
+### Option 2: React Component
+
+To use the Fleek Chatbox Widget in a React application:
+
+```jsx
+import React from 'react';
+import FleekChatbox from 'fleek-chatbox-widget';
+
+function App() {
+  return (
+    <div className="App">
+      <FleekChatbox
+        agentId="YOUR_AGENT_ID"
+        apiKey="YOUR_API_KEY"
+        colors={{
+          'color-primary': '#FF69B4',
+        }}
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+#### Props
+
+- `agentId` (required): Your Fleek agent ID
+- `apiKey` (required): Your API key for authentication
+- `colors` (optional): An object with color overrides
+
+Example:
+
+```jsx
+<FleekChatbox
+  agentId="123"
+  apiKey="abc123"
+  colors={{
+    'accent-9': '#ff0000',
+    'neutral-3': '#f5f5f5',
+  }}
+/>
+```
+
 ## How to Override Colors
+
+### In Standalone Script
 
 You can customize the appearance of the widget by overriding the default colors. This is done by passing a JSON object in the `colors` parameter:
 
@@ -124,6 +198,21 @@ Example (before URL encoding):
 }
 ```
 
+### In React Component
+
+When using the React component, you can pass the colors directly as an object:
+
+```jsx
+<FleekChatbox
+  agentId="123"
+  apiKey="abc123"
+  colors={{
+    'accent-9': '#ff0000',
+    'neutral-3': '#f5f5f5',
+  }}
+/>
+```
+
 ### Available Color Variables
 
 - **Neutral colors**: `--neutral-1` through `--neutral-12`
@@ -145,7 +234,7 @@ For a complete list of available variables, see the [theme usage documentation](
 
 #### Custom colors not applying
 
-- Make sure your JSON is properly URL-encoded
+- Make sure your JSON is properly URL-encoded (for standalone script)
 - Check the browser console for any parsing errors
 - Verify the color variable names match those in the documentation
 
@@ -157,7 +246,7 @@ For a complete list of available variables, see the [theme usage documentation](
 
 ### Debugging
 
-To enable debug mode, add `debug=true` to the script parameters:
+To enable debug mode in the standalone script, add `debug=true` to the script parameters:
 
 ```html
 <script

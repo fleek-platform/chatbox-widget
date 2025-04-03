@@ -1,9 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fleek Chatbox Widget</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Fleek Chatbox Widget React Example" />
+    <title>Fleek Chatbox Widget React Example</title>
     <style>
       body {
         font-family:
@@ -23,10 +25,6 @@
         margin: 0 auto;
         padding: 20px;
         text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
       }
 
       h1 {
@@ -38,15 +36,17 @@
         color: #777;
         margin-bottom: 30px;
       }
+
+      .App {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Fleek Chatbox Widget</h1>
-      <p>This page demonstrates the chatbox widget with the updated UI.</p>
-      <div id="target-container"></div>
-    </div>
-
-    <script src="../dist/chatbox.js?agentId=123&apiKey=abc123&colors=%7B%22color-primary%22%3A%22%23FF69B4%22%7D&containerId=target-container"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
   </body>
 </html>

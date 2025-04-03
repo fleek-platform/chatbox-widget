@@ -1,11 +1,25 @@
 {
-  "name": "fleek-chatbox-widget",
+  "name": "@fleek-platform/agents-chatbox-widget",
   "version": "0.1.0",
   "description": "A standalone chatbox widget for Fleek agents",
-  "main": "dist/chatbox.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "scripts": {
     "build": "rollup -c",
+    "build:standalone": "rollup -c --environment BUILD:standalone",
+    "build:npm": "rollup -c --environment BUILD:npm",
     "start": "npm run build && npx live-server --open=test/index.html",
     "dev": "rollup -c --watch & npx live-server --open=test/index.html",
     "format": "biome format --write .",
@@ -15,19 +29,28 @@
     "check": "biome check --apply .",
     "check:ci": "biome ci ."
   },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@rollup/plugin-alias": "^4.0.4",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^10.1.1",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-terser": "^7.0.2",
     "tslib": "^2.6.0",

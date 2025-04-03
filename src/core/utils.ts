@@ -14,6 +14,7 @@ export function getScriptParams(): ScriptParams {
     const params: ScriptParams = {
       agentId: url.searchParams.get('agentId'),
       apiKey: url.searchParams.get('apiKey'),
+      containerId: url.searchParams.get('containerId') || undefined,
     };
 
     // Parse color overrides if provided

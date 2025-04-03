@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'preact/hooks';
 import styles from './MessageList.module.css';
-import type { Message } from '../types.js';
-import { MessageItem } from './MessageItem.js';
-import { TypingIndicator } from './TypingIndicator.js';
-import { ErrorDisplay } from './ErrorDisplay.js';
-import { EmptyState } from './EmptyState.js';
+import type { Message } from '../core/types';
+import { MessageItem } from './MessageItem';
+import { TypingIndicator } from './TypingIndicator';
+import { ErrorDisplay } from './ErrorDisplay';
+import { EmptyState } from './EmptyState';
 
 interface MessageListProps {
   messages: Message[];
