@@ -1,65 +1,109 @@
-import type { AgentResponse, MessageResponse } from './types.js';
+import type { AgentStatus, AgentResponse, MessageResponse } from './types.js';
 
-export class ApiClient {
-  private baseUrl = 'https://api.on-fleek.app';
-  private apiKey: string;
+const ENDPOINTS = {
+  aiAgentStatus: 'api/v1/ai-agents/:id/status',
+  aiAgentDetails: 'api/v1/ai-agents/:id',
+  aiAgentMessage: 'api/v1/ai-agents/:id/api/:elizaId/message',
+  aiAgentProxy: 'api/v1/ai-agents/:id/api/agents',
+};
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
-  }
+interface ICreateApiClient {
+  baseUrl: string;
+  pat: string;
+  fleekAgentId: string;
+}
 
-  // Fetch ElizaOS agent ID using Fleek agent ID
-  async fetchAgentDetails(fleekAgentId: string): Promise<AgentResponse> {
-    // Placeholder: We will replace with actual BE proxy endpoint
+export const createApiClient = ({
+  baseUrl,
+  pat,
+  fleekAgentId,
+}: ICreateApiClient) => {
+  if (!baseUrl || !pat || !fleekAgentId) return;
+
+  const fetchAgentStatus = async (): Promise<AgentStatus> => {
     const response = await fetch(
-      `${this.baseUrl}/proxy/agents/${fleekAgentId}`,
+      `${baseUrl}/${ENDPOINTS.aiAgentStatus.replace(':id', fleekAgentId)}`,
       {
-        headers: { 'X-API-Key': this.apiKey },
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${pat}`,
+          'X-API-Key': pat,
+          'Content-Type': 'application/json',
+        },
       },
     );
-    if (!response.ok) throw new Error('Failed to fetch agent details');
-    return response.json() as Promise<AgentResponse>;
-  }
 
-  // Send message to agent via BE proxy
-  async sendMessage(
-    fleekAgentId: string,
-    elizaAgentId: string,
-    content: string,
-  ): Promise<MessageResponse> {
-    // Placeholder: We will replace with actual BE proxy endpoint
+    if (!response.ok) throw new Error('Failed to fetch agent status');
+
+    return await response.json();
+  };
+
+  const sendMessage = async (
+    user: string,
+    roomId: string,
+    elizaId: string,
+    message: string,
+  ): Promise<string> => {
     const response = await fetch(
-      `${this.baseUrl}/proxy/agents/${fleekAgentId}/messages`,
+      `${baseUrl}/${ENDPOINTS.aiAgentMessage.replace(':id', fleekAgentId).replace(':elizaId', elizaId)}`,
       {
         method: 'POST',
         headers: {
-          'X-API-Key': this.apiKey,
+          Authorization: `Bearer ${pat}`,
+          'X-API-Key': pat,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ elizaAgentId, content }),
+        body: JSON.stringify({ senderId: user, roomId, text: message }),
       },
     );
-    if (!response.ok) throw new Error('Failed to send message');
-    return response.json() as Promise<MessageResponse>;
-  }
-}
 
-// Dummy implementation for now
-export function createDummyApiClient(): ApiClient {
+    if (!response.ok) throw new Error('Failed to send message');
+    const agentMessage = (await response.json())[0];
+    return agentMessage.text;
+  };
+
+  const fetchAgentDetails = async (): Promise<AgentResponse> => {
+    const responseAgent = await fetch(
+      `${baseUrl}/${ENDPOINTS.aiAgentProxy.replace(':id', fleekAgentId)}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${pat}`,
+          'X-API-Key': pat,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    if (!responseAgent.ok) throw new Error('Failed to fetch agent details');
+
+    const agentData = await responseAgent.json();
+    const elizaId = agentData.agents[0].id;
+    console.log('🚀 ~ fetchAgentDetails ~ agentData:', agentData);
+
+    const responseAgentDetails = await fetch(
+      `${baseUrl}/${ENDPOINTS.aiAgentDetails.replace(':id', fleekAgentId)}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${pat}`,
+          'X-API-Key': pat,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    if (!responseAgentDetails.ok)
+      throw new Error('Failed to fetch agent details');
+
+    const agentDetailsData = await responseAgentDetails.json();
+
+    return { ...agentDetailsData, elizaId };
+  };
+
   return {
-    fetchAgentDetails: async (fleekAgentId: string) => ({
-      elizaAgentId: `eliza-${fleekAgentId}`,
-      name: 'Test Agent',
-      avatar: 'https://picsum.photos/38',
-    }),
-    sendMessage: async (
-      _fleekAgentId: string,
-      _elizaAgentId: string,
-      content: string,
-    ) => ({
-      id: Date.now().toString(),
-      content: `Hi! I'm Test Agent. You said: "${content}"`,
-      timestamp: Date.now(),
-    }),
-  } as ApiClient;
-}
+    fetchAgentStatus,
+    fetchAgentDetails,
+    sendMessage,
+  };
+};

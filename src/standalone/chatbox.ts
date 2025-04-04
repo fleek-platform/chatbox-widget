@@ -9,11 +9,11 @@ console.log('Chatbox script loaded (Preact version)');
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM fully loaded');
 
-  const { agentId, apiKey, colors, containerId } = getScriptParams();
+  const { agentId, pat, colors, containerId } = getScriptParams();
 
-  if (!agentId || !apiKey) {
+  if (!agentId || !pat) {
     console.error(
-      'Fleek Chatbox: Missing agentId or apiKey in script parameters. Cannot initialize.',
+      'Fleek Chatbox: Missing agentId or pat in script parameters. Cannot initialize.',
     );
     return;
   }
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log(`Initializing ChatboxWidget with agentId: ${agentId}`);
   render(
-    h(ChatboxWidget, { agentId, apiKey, colors, useFixedPosition }),
+    h(ChatboxWidget, { agentId, pat, colors, useFixedPosition }),
     container,
   );
 });

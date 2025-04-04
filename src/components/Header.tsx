@@ -5,14 +5,14 @@ import Cross from './icons/Cross';
 interface HeaderProps {
   agentName: string;
   agentAvatar: string;
-  agentState: 'active' | 'inactive';
+  agentState: 'offline' | 'live';
   onClose: () => void;
 }
 
 export function Header({
   agentName,
   agentAvatar,
-  agentState = 'inactive',
+  agentState = 'offline',
   onClose,
 }: HeaderProps) {
   return (
@@ -20,7 +20,7 @@ export function Header({
       <div className={styles.titleContainer}>
         <Avatar src={agentAvatar} alt={`${agentName}'s avatar`} size="small" />
         <span className={styles.title}>{agentName}</span>
-        <span className={styles.statusBadge}>{agentState}</span>
+        <span className={`${styles.statusBadge}`}>{agentState}</span>
       </div>
       <button
         type="button"

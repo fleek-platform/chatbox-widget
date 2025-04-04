@@ -6,13 +6,12 @@ import { ChatboxWidget } from '../components/ChatboxWidget.js';
 import '../global.css';
 
 // Named exports for utilities and types
-export { ApiClient, createDummyApiClient } from '../core/api.js';
 export * from '../core/types.js';
 
 // Create a React-compatible props interface
 export interface FleekChatboxProps {
   agentId: string;
-  apiKey: string;
+  pat: string;
   colors?: Record<string, string>;
 }
 
@@ -67,12 +66,12 @@ class FleekChatbox extends React.Component<FleekChatboxProps> {
   }
 
   renderPreactComponent() {
-    const { agentId, apiKey, colors } = this.props;
+    const { agentId, pat, colors } = this.props;
 
     if (this.containerRef.current) {
       // Render the Preact component into the container
       render(
-        h(ChatboxWidget, { agentId, apiKey, colors, useFixedPosition: false }),
+        h(ChatboxWidget, { agentId, pat, colors, useFixedPosition: false }),
         this.containerRef.current,
       );
     }

@@ -1,4 +1,4 @@
-import type { Message } from '../core/types';
+import type { Message, WidgetState } from '../core/types';
 import { ChatInput } from './ChatInput';
 import styles from './ChatWindow.module.css';
 import { Header } from './Header';
@@ -8,8 +8,8 @@ import FleekLogo from './icons/FleekLogo';
 interface ChatWindowProps {
   agentName: string;
   agentAvatar: string;
-  agentState: 'active' | 'inactive';
   messages: Message[];
+  widgetState: WidgetState;
   isTyping: boolean;
   error: Error | null;
   onClose: () => void;
@@ -19,7 +19,7 @@ interface ChatWindowProps {
 
 export function ChatWindow({
   agentName,
-  agentState,
+  widgetState,
   agentAvatar,
   messages,
   isTyping,
@@ -28,6 +28,14 @@ export function ChatWindow({
   onSendMessage,
   onRetry,
 }: ChatWindowProps) {
+  // Determine agent state based on widget state
+  const agentState = ['READY', 'SENDING_MESSAGE'].includes(widgetState)
+    ? 'live'
+    : 'offline';
+
+  // Determine if typing indicator should be shown
+  const showTypingIndicator = widgetState === 'SENDING_MESSAGE' || isTyping;
+
   return (
     <div className={styles.chatWindow}>
       <Header
@@ -41,7 +49,7 @@ export function ChatWindow({
           messages={messages}
           agentName={agentName}
           agentAvatar={agentAvatar}
-          isTyping={isTyping}
+          isTyping={showTypingIndicator}
           error={error}
           onRetry={onRetry}
         />
@@ -49,7 +57,7 @@ export function ChatWindow({
         <ChatInput
           agentName={agentName}
           onSendMessage={onSendMessage}
-          disabled={isTyping || !!error}
+          disabled={widgetState !== 'READY' || !!error}
         />
       </div>
 
