@@ -1,9 +1,14 @@
-import { useEffect, useState, useCallback } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 import { createApiClient } from '../core/api.js';
-import type { Message, WidgetState } from '../core/types.js';
+import type {
+  ChatboxWidgetProps,
+  Message,
+  WidgetState,
+} from '../core/types.js';
 import {
-  loadRoomId,
+  getApiBaseUrl,
   loadMessages,
+  loadRoomId,
   saveMessages,
   saveRoomId,
 } from '../core/utils.js';
@@ -11,18 +16,12 @@ import { ChatWindow } from './ChatWindow.js';
 import styles from './ChatboxWidget.module.css';
 import { ToggleButton } from './ToggleButton.js';
 
-interface ChatboxWidgetProps {
-  agentId: string;
-  pat: string;
-  colors?: Record<string, string>;
-  useFixedPosition?: boolean;
-}
-
 export function ChatboxWidget({
   agentId,
   pat,
   colors,
   useFixedPosition = true,
+  env,
 }: ChatboxWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -38,7 +37,7 @@ export function ChatboxWidget({
     createApiClient({
       fleekAgentId: agentId,
       pat,
-      baseUrl: 'https://api.staging.fleeksandbox.xyz',
+      baseUrl: getApiBaseUrl(env),
     }),
   );
 

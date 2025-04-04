@@ -1,0 +1,61 @@
+name: 📦 Publish to npm
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: 'The version to publish'
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Verify version
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "$PKG_VERSION" != "${{ inputs.version }}" ]; then
+            echo "Error: Package version ($PKG_VERSION) does not match expected version (${{ inputs.version }})"
+            exit 1
+          fi
+          echo "✅ Version verified: $PKG_VERSION"
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify publication
+        run: |
+          # Wait a bit for npm to update
+          sleep 10
+
+          # Check if the package is available with the correct version
+          PUBLISHED_VERSION=$(npm view @fleek-platform/agents-chatbox-widget version 2>/dev/null || echo "not found")
+
+          if [ "$PUBLISHED_VERSION" = "${{ inputs.version }}" ]; then
+            echo "✅ Successfully published version $PUBLISHED_VERSION to npm"
+          else
+            echo "⚠️ Publication verification failed. Published version: $PUBLISHED_VERSION, Expected: ${{ inputs.version }}"
+            echo "This might be due to npm registry delay. Please verify manually."
+          fi
