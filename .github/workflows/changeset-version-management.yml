@@ -3,9 +3,7 @@ name: 🪡 Changeset (Version Management)
 on:
   push:
     branches:
-      - develop
-    paths:
-      - '.changeset/**'
+      - 'develop'
 
   # remove after test
   workflow_dispatch:
@@ -76,16 +74,17 @@ jobs:
           pendingChangesetList=$(find .changeset -type f -name "*.md" ! -name "README.md")
 
           if [[ -n "$pendingChangesetList" ]]; then
-            echo "⚠️ There are pending changeset files:"
+            echo "✅ There are pending changeset files:"
             echo "$pendingChangesetList"
-          fi
-
-          # If no changes found, skip
-          if echo "$pendingChangesetList" | grep -qE "$changesetArtifactsRegex"; then
-            echo "✅ Changeset found!"
-            updated="true"
+            
+            # If changeset files found, don't skip
+            if echo "$pendingChangesetList" | grep -qE "$changesetArtifactsRegex"; then
+              echo "✅ Changeset found!"
+              updated="true"
+              skip="false"
+            fi
           else
-            echo "⚠️ Warning: The .changeset directory doesn't have new changesets, should skip!"
+            echo "⚠️ No pending changeset files found"
             skip="true"
           fi
 
