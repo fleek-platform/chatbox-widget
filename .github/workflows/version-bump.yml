@@ -11,11 +11,11 @@ on:
 jobs:
   version-bump:
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.get-version.outputs.version }}
     permissions:
       contents: write
       pull-requests: write
-    outputs:
-      new_version: ${{ steps.get-version.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -97,4 +97,5 @@ jobs:
         id: get-version
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          echo "Version detected: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT

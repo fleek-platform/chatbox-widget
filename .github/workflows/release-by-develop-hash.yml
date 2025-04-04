@@ -135,19 +135,19 @@ jobs:
   version-bump:
     needs: merge-by-develop-hash
     uses: ./.github/workflows/version-bump.yml
-    with:
-      commit_hash: ${{ needs.merge-by-develop-hash.outputs.commit_hash }}
     permissions:
       contents: write
       pull-requests: write
+    with:
+      commit_hash: ${{ needs.merge-by-develop-hash.outputs.commit_hash }}
 
   create-latest-release:
     needs: version-bump
     uses: ./.github/workflows/create-latest-release.yml
-    with:
-      version: ${{ needs.version-bump.outputs.new_version }}
     permissions:
       contents: write
+    with:
+      version: ${{ needs.version-bump.outputs.new_version }}
 
   publish-to-npm:
     needs: version-bump

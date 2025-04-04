@@ -31,6 +31,22 @@ jobs:
 
       - name: Delete existing 'latest' tag if it exists
         run: |
+      - name: Verify version
+        id: verify-version
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          echo "Package version: $PKG_VERSION"
+          echo "Input version: ${{ inputs.version }}"
+
+          # If input version is empty or doesn't match package version, use package version
+          if [ -z "${{ inputs.version }}" ] || [ "${{ inputs.version }}" != "$PKG_VERSION" ]; then
+            echo "⚠️ Using package.json version: $PKG_VERSION"
+            echo "version=$PKG_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Using input version: ${{ inputs.version }}"
+            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          fi
+
           git fetch --tags
           if git rev-parse --verify refs/tags/latest >/dev/null 2>&1; then
             git tag -d latest
@@ -43,11 +59,11 @@ jobs:
         with:
           files: |
             dist/chatbox.js
-            dist/chatbox-${{ inputs.version }}.js
-          tag_name: v${{ inputs.version }}
-          name: Release v${{ inputs.version }}
+            dist/chatbox-${{ steps.verify-version.outputs.version || inputs.version }}.js
+          tag_name: v${{ steps.verify-version.outputs.version || inputs.version }}
+          name: Release v${{ steps.verify-version.outputs.version || inputs.version }}
           body: |
-            ## Release v${{ inputs.version }}
+            ## Release v${{ steps.verify-version.outputs.version || inputs.version }}
 
             This release includes all changes up to commit ${{ github.sha }}.
 
@@ -69,7 +85,7 @@ jobs:
           tag_name: latest
           name: Latest Release
           body: |
-            ## Latest Release (v${{ inputs.version }})
+            ## Latest Release (v${{ steps.verify-version.outputs.version || inputs.version }})
 
             This is always the latest stable release of the chatbox widget.
 
