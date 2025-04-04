@@ -74,3 +74,14 @@ export function applyColorOverrides(
     console.log(`Applied color override: --${key}: ${value}`);
   }
 }
+
+export const isValidUrl = (urlString: string) => {
+  // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
+  let url;
+  try {
+    url = new URL(urlString);
+  } catch (e) {
+    return false;
+  }
+  return url.protocol === 'http:' || url.protocol === 'https:';
+};

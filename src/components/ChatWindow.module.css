@@ -6,7 +6,7 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   position: absolute;
-  bottom: 80px;
+  bottom: 60px;
   right: 0;
   overflow: hidden;
   animation: slideIn 0.3s ease forwards;

@@ -31,9 +31,9 @@
     "prepare": "husky",
     "prepare-release-artifacts": "npm run build",
     "release": "npm run build && npm pack",
-    "changeset": "changeset",
-    "version": "changeset version",
-    "publish-packages": "changeset publish"
+    "changeset:add": "npm exec changeset",
+    "changeset:status": "npm exec changeset status",
+    "changeset:version": "npm exec changeset version"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

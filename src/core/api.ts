@@ -1,4 +1,4 @@
-import type { AgentStatus, AgentResponse, MessageResponse } from './types.js';
+import type { AgentStatus, AgentResponse } from './types.js';
 
 const ENDPOINTS = {
   aiAgentStatus: 'api/v1/ai-agents/:id/status',

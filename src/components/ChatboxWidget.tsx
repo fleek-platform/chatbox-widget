@@ -1,12 +1,6 @@
 import { useEffect, useState, useCallback } from 'preact/hooks';
 import { createApiClient } from '../core/api.js';
-import type {
-  Message,
-  WidgetState,
-  AgentStatus,
-  MessageResponse,
-  AgentResponse,
-} from '../core/types.js';
+import type { Message, WidgetState } from '../core/types.js';
 import {
   loadRoomId,
   loadMessages,
@@ -35,8 +29,8 @@ export function ChatboxWidget({
   const [error, setError] = useState<Error | null>(null);
   const [widgetState, setWidgetState] = useState<WidgetState>('INITIALIZING');
   const [agent, setAgent] = useState({
-    name: 'Agent',
-    avatar: 'https://picsum.photos/38',
+    name: '',
+    avatar: '',
     elizaId: '',
   });
   const [roomId, setRoomId] = useState<string>('');
@@ -241,20 +235,19 @@ export function ChatboxWidget({
     >
       <ToggleButton isOpen={isOpen} onClick={toggleChat} />
 
-      {isOpen &&
-        widgetState !== 'INITIALIZING' && ( // Render ChatWindow unless initializing
-          <ChatWindow
-            agentName={agent.name}
-            agentAvatar={agent.avatar}
-            widgetState={widgetState} // Pass the state
-            isTyping={widgetState === 'SENDING_MESSAGE'} // Derive isTyping from widgetState
-            messages={messages}
-            error={error}
-            onClose={toggleChat}
-            onSendMessage={sendMessage}
-            onRetry={handleRetry} // Use the new retry handler
-          />
-        )}
+      {isOpen && (
+        <ChatWindow
+          agentName={agent.name || 'Agent'}
+          agentAvatar={agent.avatar || 'avatar_1'}
+          widgetState={widgetState}
+          isTyping={widgetState === 'SENDING_MESSAGE'}
+          messages={messages}
+          error={error}
+          onClose={toggleChat}
+          onSendMessage={sendMessage}
+          onRetry={handleRetry}
+        />
+      )}
     </div>
   );
 }

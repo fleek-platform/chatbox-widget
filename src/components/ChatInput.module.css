@@ -43,7 +43,6 @@
 }
 
 .textarea:disabled {
-  background-color: var(--neutral-5);
   color: var(--neutral-9);
   cursor: not-allowed;
 }

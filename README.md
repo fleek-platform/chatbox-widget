@@ -139,7 +139,7 @@ For production use, we recommend using a specific version of the standalone scri
 
 ```html
 <script
-  src="https://[username].github.io/[repo-name]/chatbox-1.0.0.js?agentId=YOUR_AGENT_ID&apiKey=YOUR_API_KEY"
+  src="https://[username].github.io/[repo-name]/chatbox-1.0.0.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY"
   async
 ></script>
 ```
@@ -154,7 +154,7 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&apiKey=YOUR_API_KEY"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY"
   async
 ></script>
 ```
@@ -162,13 +162,13 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 #### Required Parameters
 
 - `agentId`: Your Fleek agent ID
-- `apiKey`: Your API key for authentication
+- `pat`: Your PAT for authentication
 
 Example:
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&apiKey=abc123"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&pat=abc123"
   async
 ></script>
 ```
@@ -186,7 +186,7 @@ function App() {
     <div className="App">
       <FleekChatbox
         agentId="YOUR_AGENT_ID"
-        apiKey="YOUR_API_KEY"
+        pat="YOUR_API_KEY"
         colors={{
           'color-primary': '#FF69B4',
         }}
@@ -201,7 +201,7 @@ export default App;
 #### Props
 
 - `agentId` (required): Your Fleek agent ID
-- `apiKey` (required): Your API key for authentication
+- `pat` (required): Your API key for authentication
 - `colors` (optional): An object with color overrides
 
 Example:
@@ -209,7 +209,7 @@ Example:
 ```jsx
 <FleekChatbox
   agentId="123"
-  apiKey="abc123"
+  pat="abc123"
   colors={{
     'accent-9': '#ff0000',
     'neutral-3': '#f5f5f5',
@@ -225,7 +225,7 @@ You can customize the appearance of the widget by overriding the default colors.
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&apiKey=YOUR_API_KEY&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
   async
 ></script>
 ```
@@ -251,7 +251,7 @@ When using the React component, you can pass the colors directly as an object:
 ```jsx
 <FleekChatbox
   agentId="123"
-  apiKey="abc123"
+  pat="abc123"
   colors={{
     'accent-9': '#ff0000',
     'neutral-3': '#f5f5f5',
@@ -274,7 +274,7 @@ For a complete list of available variables, see the [theme usage documentation](
 #### Widget doesn't appear on the page
 
 - Check that the script URL is correct
-- Verify that your `agentId` and `apiKey` are valid
+- Verify that your `agentId` and `pat` are valid
 - Check the browser console for any JavaScript errors
 - Ensure there are no Content Security Policy (CSP) restrictions blocking the script
 
@@ -296,7 +296,7 @@ To enable debug mode in the standalone script, add `debug=true` to the script pa
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&apiKey=YOUR_API_KEY&debug=true"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY&debug=true"
   async
 ></script>
 ```

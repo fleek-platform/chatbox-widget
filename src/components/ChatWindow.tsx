@@ -30,8 +30,8 @@ export function ChatWindow({
 }: ChatWindowProps) {
   // Determine agent state based on widget state
   const agentState = ['READY', 'SENDING_MESSAGE'].includes(widgetState)
-    ? 'live'
-    : 'offline';
+    ? 'active'
+    : 'inactive';
 
   // Determine if typing indicator should be shown
   const showTypingIndicator = widgetState === 'SENDING_MESSAGE' || isTyping;
@@ -52,6 +52,7 @@ export function ChatWindow({
           isTyping={showTypingIndicator}
           error={error}
           onRetry={onRetry}
+          widgetState={widgetState}
         />
 
         <ChatInput

@@ -39,15 +39,3 @@ jobs:
 
       - name: Build Project
         run: npm run build
-
-      - name: Create Release Pull Request
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: changesets/action@v1
-        with:
-          version: npm run version
-          commit: 'chore: version packages'
-          title: 'chore: version packages'
-          # We're not publishing automatically, just creating the version PR
-          publish: false
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'

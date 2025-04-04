@@ -1,4 +1,5 @@
-.typingIndicator {
+/* Based on MessageItem.module.css */
+.messageItem {
   display: flex;
   gap: 12px;
   align-items: flex-start;
@@ -13,45 +14,31 @@
   object-fit: cover;
 }
 
-.bubble {
-  background: var(--neutral-5);
-  padding: 8px 12px;
-  border-radius: 12px;
-  border-bottom-left-radius: 4px;
+.contentContainer {
+  min-width: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name {
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--neutral-12);
+}
+
+.typingContent {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  font-size: 11px;
+  color: var(--neutral-11); /* Light grey color */
+  word-wrap: break-word;
   display: inline-block;
-}
-
-.text {
-  color: var(--neutral-10);
-  font-size: 14px;
-  font-style: italic;
-}
-
-.dots {
-  display: inline-block;
-}
-
-.dots span {
-  animation: blink 1.4s infinite both;
-  display: inline-block;
-}
-
-.dots span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.dots span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes blink {
-  0% {
-    opacity: 0.2;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.2;
-  }
 }

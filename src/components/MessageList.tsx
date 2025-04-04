@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'preact/hooks';
-import type { Message } from '../core/types';
+import type { Message, WidgetState } from '../core/types';
 import { EmptyState } from './EmptyState';
 import { ErrorDisplay } from './ErrorDisplay';
 import { MessageItem } from './MessageItem';
 import styles from './MessageList.module.css';
+import { LoadingState } from './LoadingState';
 import { TypingIndicator } from './TypingIndicator';
 
 interface MessageListProps {
@@ -13,6 +14,7 @@ interface MessageListProps {
   isTyping: boolean;
   error: Error | null;
   onRetry: () => void;
+  widgetState: WidgetState;
 }
 
 export function MessageList({
@@ -22,8 +24,15 @@ export function MessageList({
   isTyping,
   error,
   onRetry,
+  widgetState,
 }: MessageListProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const loadingStates = [
+    'CHECKING_AGENT_STATUS',
+    'FETCHING_AGENT_DETAILS',
+    'LOADING_MESSAGES',
+  ];
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needed for message updates
   useEffect(() => {
@@ -35,6 +44,8 @@ export function MessageList({
     }
   }, [messages]);
 
+  const isLoading = loadingStates.includes(widgetState);
+
   return (
     <div className={styles.container} ref={containerRef}>
       {error ? (
@@ -42,6 +53,8 @@ export function MessageList({
           message={error.message || 'An error occurred'}
           onRetry={onRetry}
         />
+      ) : isLoading ? (
+        <LoadingState widgetState={widgetState} />
       ) : messages.length === 0 && !isTyping ? (
         <EmptyState agentName={agentName} />
       ) : (

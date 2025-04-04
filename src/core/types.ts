@@ -48,11 +48,7 @@ export interface ScriptParams {
 }
 
 export interface AgentResponse {
-  elizaAgentId: string;
+  elizaId: string;
   name: string;
   avatar?: string;
-}
-
-export interface MessageResponse {
-  text: string;
 }

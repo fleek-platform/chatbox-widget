@@ -1,7 +1,9 @@
 import type { FunctionComponent } from 'preact';
 import { useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import styles from './Avatar.module.css';
 import { GenericAvatar } from './GenericAvatar';
+import { isValidUrl } from '../core/utils';
 
 export interface AvatarProps {
   src: string;
@@ -11,7 +13,7 @@ export interface AvatarProps {
 }
 
 export const Avatar: FunctionComponent<AvatarProps> = ({
-  src,
+  src = 'avatar_1',
   alt,
   size,
   className = '',
@@ -19,6 +21,16 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const sizeClass = size === 'small' ? styles.small : styles.normal;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Reset loading/error state when src changes
+  useEffect(() => {
+    setIsLoading(true);
+    setHasError(false);
+  }, [src]);
+
+  const avatarSrc = isValidUrl(src)
+    ? src
+    : `https://fleek.xyz/eliza/images/avatars/${src}.webp`;
 
   const handleError = () => {
     setHasError(true);
@@ -36,7 +48,8 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
     <div className={`${styles.avatarContainer} ${sizeClass}`}>
       {isLoading && <div className={styles.spinner} />}
       <img
-        src={src}
+        key={avatarSrc}
+        src={avatarSrc}
         alt={alt}
         className={`${styles.avatar} ${sizeClass} ${className}`}
         onLoad={handleLoad}

@@ -1,0 +1,140 @@
+name: 🪡 Changeset (Version Management)
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  # remove after test
+  workflow_dispatch:
+
+jobs:
+  changeset_handler:
+    name: Changeset handler
+    runs-on: ubuntu-latest
+    # Important: Use the same logic for `env`
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    env:
+      # Important: Use the same logic for `environment`
+      # since github actions at time of writing
+      # does not have a way to access it directly from steps
+      DEPLOY_ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: fleek-platform-bot-token
+        with:
+          app-id: ${{ secrets.FLEEK_PLATFORM_BOT_APP_ID }}
+          private-key: ${{ secrets.FLEEK_PLATFORM_BOT_PRIVATE_KEY }}
+
+      - name: Verify bot token
+        run: |
+          if [[ -n "${{ steps.fleek-platform-bot-token.outputs.token }}" ]]; then
+            echo "✅ Token exists"
+          else
+            echo "❌ Token is empty"
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.fleek-platform-bot-token.outputs.token }}
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Cache dependencies
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          npm ci
+
+      - name: Changeset status
+        id: changeset-status
+        shell: bash
+        run: |
+          # Default skip state
+          skip="false"
+          # Changeset artifacts
+          changesetArtifactsRegex="\.changeset/.*\.md$"
+          # Commit hash that triggered workflow
+          commitHash="${{ github.sha }}"
+
+          pendingChangesetList=$(find .changeset -type f -name "*.md" ! -name "README.md")
+
+          if [[ -n "$pendingChangesetList" ]]; then
+            echo "⚠️ There are pending changeset files:"
+            echo "$pendingChangesetList"
+          fi
+
+          # If no changes found, skip
+          if echo "$pendingChangesetList" | grep -qE "$changesetArtifactsRegex"; then
+            echo "✅ Changeset found!"
+          else
+            echo "⚠️ Warning: The .changeset directory doesn't have new changesets, should skip!"
+            skip="true"
+          fi
+
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
+
+      - name: Set version
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          npx changeset version
+          git status --short
+
+      - name: Update lockfile
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          npm install --package-lock-only
+
+          if git diff --quiet package-lock.json; then
+            echo "🤖 No changes to lockfile"
+          else
+            echo "✅ Lockfile was updated"
+          fi
+
+      - name: Commit changes
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          if ! git add -A; then
+            echo "👹 Oops! Failed stage changes"
+            exit 1
+          fi
+
+          echo "✅ Staged all changes!"
+
+          pkgVersion=$(node -p "require('./package.json').version")
+          if ! git commit \
+            --allow-empty \
+            --no-verify \
+            -m "[skip ci] 🦖 updated package version to $pkgVersion"; then
+            echo "👹 Oops! Failed to commit package version."
+            exit 1
+          fi
+
+          echo "✅ Committed package version!"
+
+          if ! git push; then
+            echo "👹 Oops! Failed to push changes."
+            exit 1
+          fi
+
+          echo "✅ Pushed changes to repository!"

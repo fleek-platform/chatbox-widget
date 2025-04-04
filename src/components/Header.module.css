@@ -34,6 +34,17 @@
   text-transform: capitalize;
 }
 
+.statusBadgeOffline {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--neutral-11);
+  background-color: var(--neutral-3);
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  text-transform: capitalize;
+}
+
 .closeButton {
   background-color: var(--neutral-3);
   border: none;
