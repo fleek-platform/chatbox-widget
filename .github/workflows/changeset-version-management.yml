@@ -19,25 +19,8 @@ jobs:
       version_updated: ${{ steps.changeset-status.outputs.updated }}
       new_version: ${{ steps.get-version.outputs.version }}
     steps:
-      - uses: actions/create-github-app-token@v1
-        id: fleek-platform-bot-token
-        with:
-          app-id: ${{ secrets.FLEEK_PLATFORM_BOT_APP_ID }}
-          private-key: ${{ secrets.FLEEK_PLATFORM_BOT_PRIVATE_KEY }}
-
-      - name: Verify bot token
-        run: |
-          if [[ -n "${{ steps.fleek-platform-bot-token.outputs.token }}" ]]; then
-            echo "✅ Token exists"
-          else
-            echo "❌ Token is empty"
-          fi
-
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ steps.fleek-platform-bot-token.outputs.token }}
-          ref: ${{ github.head_ref }}
 
       - name: Setup Nodejs
         uses: actions/setup-node@v4
