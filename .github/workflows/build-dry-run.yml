@@ -1,0 +1,43 @@
+name: 🔧 Build (dry-run)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+jobs:
+  build-dry-run:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install
+        run: npm ci
+
+      - name: Build site
+        run: npm run build

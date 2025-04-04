@@ -1,6 +1,7 @@
 import { h, render } from 'preact';
 import * as React from 'react';
 import { ChatboxWidget } from '../components/ChatboxWidget.js';
+import type { Environment } from '../core/types.js';
 
 // Import global CSS
 import '../global.css';
@@ -13,6 +14,7 @@ export interface FleekChatboxProps {
   agentId: string;
   pat: string;
   colors?: Record<string, string>;
+  env?: Environment;
 }
 
 /**
@@ -66,12 +68,18 @@ class FleekChatbox extends React.Component<FleekChatboxProps> {
   }
 
   renderPreactComponent() {
-    const { agentId, pat, colors } = this.props;
+    const { agentId, pat, colors, env } = this.props;
 
     if (this.containerRef.current) {
       // Render the Preact component into the container
       render(
-        h(ChatboxWidget, { agentId, pat, colors, useFixedPosition: false }),
+        h(ChatboxWidget, {
+          agentId,
+          pat,
+          colors,
+          useFixedPosition: false,
+          env,
+        }),
         this.containerRef.current,
       );
     }
