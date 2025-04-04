@@ -163,12 +163,13 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 
 - `agentId`: Your Fleek agent ID
 - `pat`: Your PAT for authentication
+- `env` (optional): Environment to connect to (`dev`, `staging`, or `prod` (default))
 
 Example:
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&pat=abc123"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&pat=abc123&env=staging"
   async
 ></script>
 ```
@@ -187,6 +188,7 @@ function App() {
       <FleekChatbox
         agentId="YOUR_AGENT_ID"
         pat="YOUR_API_KEY"
+        env="staging"
         colors={{
           'color-primary': '#FF69B4',
         }}
@@ -203,6 +205,7 @@ export default App;
 - `agentId` (required): Your Fleek agent ID
 - `pat` (required): Your API key for authentication
 - `colors` (optional): An object with color overrides
+- `env` (optional): Environment to connect to (`dev`, `staging`, or `prod` (default))
 
 Example:
 
@@ -210,12 +213,25 @@ Example:
 <FleekChatbox
   agentId="123"
   pat="abc123"
+  env="dev"
   colors={{
     'accent-9': '#ff0000',
     'neutral-3': '#f5f5f5',
   }}
 />
 ```
+
+## Environment Configuration
+
+You can specify which environment the widget should connect to by using the `env` parameter:
+
+- `prod` (default): Production - https://api.fleek.xyz
+- `staging`: Staging - https://api.staging.fleeksandbox.xyz
+- `dev`: Development - https://api.dev.fleeksandbox.xyz
+
+If no environment is specified, the widget will connect to the production environment.
+
+This is useful for testing your integration against different environments before deploying to production.
 
 ## How to Override Colors
 

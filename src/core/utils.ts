@@ -1,4 +1,15 @@
-import type { Message, ScriptParams } from './types.js';
+import type { Environment, Message, ScriptParams } from './types.js';
+
+export function getApiBaseUrl(env?: Environment): string {
+  switch (env) {
+    case 'dev':
+      return 'https://api.dev.fleeksandbox.xyz';
+    case 'staging':
+      return 'https://api.staging.fleeksandbox.xyz';
+    default:
+      return 'https://api.fleek.xyz';
+  }
+}
 
 export function getScriptParams(): ScriptParams {
   try {
@@ -15,6 +26,7 @@ export function getScriptParams(): ScriptParams {
       agentId: url.searchParams.get('agentId'),
       pat: url.searchParams.get('pat'),
       containerId: url.searchParams.get('containerId') || undefined,
+      env: (url.searchParams.get('env') as Environment) || undefined,
     };
 
     // Parse color overrides if provided

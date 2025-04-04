@@ -1,0 +1,100 @@
+name: 🔄 Version Bump
+
+on:
+  workflow_call:
+    inputs:
+      commit_hash:
+        required: true
+        type: string
+        description: 'The commit hash that triggered the release'
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      new_version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Find changes since last release
+        id: find-changes
+        run: |
+          # Get the last release tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          if [ -z "$LAST_TAG" ]; then
+            echo "No previous tags found, treating as initial release"
+            echo "changes=initial" >> $GITHUB_OUTPUT
+          else
+            # Check if there are breaking changes, features, or just fixes
+            BREAKING_CHANGES=$(git log ${LAST_TAG}..HEAD --grep="BREAKING CHANGE" --oneline | wc -l)
+            FEAT_CHANGES=$(git log ${LAST_TAG}..HEAD --grep="feat:" --oneline | wc -l)
+            FIX_CHANGES=$(git log ${LAST_TAG}..HEAD --grep="fix:" --oneline | wc -l)
+            
+            if [ $BREAKING_CHANGES -gt 0 ]; then
+              echo "changes=major" >> $GITHUB_OUTPUT
+            elif [ $FEAT_CHANGES -gt 0 ]; then
+              echo "changes=minor" >> $GITHUB_OUTPUT
+            else
+              echo "changes=patch" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Bump version
+        id: bump-version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+
+          # Split version into components
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+
+          # Bump version based on change type
+          if [ "${{ steps.find-changes.outputs.changes }}" == "major" ]; then
+            NEW_VERSION="$((MAJOR + 1)).0.0"
+          elif [ "${{ steps.find-changes.outputs.changes }}" == "minor" ]; then
+            NEW_VERSION="${MAJOR}.$((MINOR + 1)).0"
+          else
+            NEW_VERSION="${MAJOR}.${MINOR}.$((PATCH + 1))"
+          fi
+
+          echo "New version: $NEW_VERSION"
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+          # Update package.json with new version
+          npm version $NEW_VERSION --no-git-tag-version
+
+      - name: Update package-lock.json
+        run: npm install --package-lock-only
+
+      - name: Commit and push changes
+        run: |
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to ${{ steps.bump-version.outputs.version }}"
+          git push origin main
+
+      - name: Get version
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
