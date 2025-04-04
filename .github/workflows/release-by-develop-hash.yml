@@ -25,7 +25,7 @@ jobs:
   merge-by-develop-hash:
     runs-on: ubuntu-latest
     outputs:
-      commit_hash: ${{ github.event.inputs.commitHash }}
+      version: ${{ steps.get-version.outputs.version }}
     steps:
       - name: Date safe-guard verification
         run: |
@@ -90,7 +90,7 @@ jobs:
       - name: Merge into main
         run: |
           if ! git checkout "${{ env.RELEASE_BRANCH }}"; then
-            echo "👹 Oops! The develop branch wasn't found"
+            echo "👹 Oops! The main branch wasn't found"
             
             exit 1
           fi
@@ -132,27 +132,27 @@ jobs:
             echo "✅ Dispatched event $EVENT_NAME"
           fi
 
-  version-bump:
-    needs: merge-by-develop-hash
-    uses: ./.github/workflows/version-bump.yml
-    permissions:
-      contents: write
-      pull-requests: write
-    with:
-      commit_hash: ${{ needs.merge-by-develop-hash.outputs.commit_hash }}
+      - name: Get version from package.json
+        id: get-version
+        run: |
+          # Checkout develop to get the latest version
+          git checkout develop
+          VERSION=$(node -p "require('./package.json').version")
+          echo "Version from develop branch: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
   create-latest-release:
-    needs: version-bump
+    needs: merge-by-develop-hash
     uses: ./.github/workflows/create-latest-release.yml
     permissions:
       contents: write
     with:
-      version: ${{ needs.version-bump.outputs.new_version }}
+      version: ${{ needs.merge-by-develop-hash.outputs.version }}
 
   publish-to-npm:
-    needs: version-bump
+    needs: merge-by-develop-hash
     uses: ./.github/workflows/publish-to-npm.yml
     with:
-      version: ${{ needs.version-bump.outputs.new_version }}
+      version: ${{ needs.merge-by-develop-hash.outputs.version }}
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

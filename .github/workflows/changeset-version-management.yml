@@ -3,8 +3,9 @@ name: 🪡 Changeset (Version Management)
 on:
   push:
     branches:
-      - main
       - develop
+    paths:
+      - '.changeset/**'
 
   # remove after test
   workflow_dispatch:
@@ -13,15 +14,12 @@ jobs:
   changeset_handler:
     name: Changeset handler
     runs-on: ubuntu-latest
-    # Important: Use the same logic for `env`
-    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
-    env:
-      # Important: Use the same logic for `environment`
-      # since github actions at time of writing
-      # does not have a way to access it directly from steps
-      DEPLOY_ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    environment: staging
     permissions:
       contents: write
+    outputs:
+      version_updated: ${{ steps.changeset-status.outputs.updated }}
+      new_version: ${{ steps.get-version.outputs.version }}
     steps:
       - uses: actions/create-github-app-token@v1
         id: fleek-platform-bot-token
@@ -69,6 +67,7 @@ jobs:
         run: |
           # Default skip state
           skip="false"
+          updated="false"
           # Changeset artifacts
           changesetArtifactsRegex="\.changeset/.*\.md$"
           # Commit hash that triggered workflow
@@ -84,12 +83,14 @@ jobs:
           # If no changes found, skip
           if echo "$pendingChangesetList" | grep -qE "$changesetArtifactsRegex"; then
             echo "✅ Changeset found!"
+            updated="true"
           else
             echo "⚠️ Warning: The .changeset directory doesn't have new changesets, should skip!"
             skip="true"
           fi
 
           echo "skip=$skip" >> "$GITHUB_OUTPUT"
+          echo "updated=$updated" >> "$GITHUB_OUTPUT"
 
       - name: Set version
         if: ${{ steps.changeset-status.outputs.skip != 'true' }}
@@ -138,3 +139,11 @@ jobs:
           fi
 
           echo "✅ Pushed changes to repository!"
+
+      - name: Get version
+        id: get-version
+        if: ${{ steps.changeset-status.outputs.skip != 'true' }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "Version detected: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT

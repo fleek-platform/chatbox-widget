@@ -20,6 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: develop
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -90,7 +91,17 @@ jobs:
       - name: Commit and push changes
         run: |
           git add package.json package-lock.json
-          git commit -m "chore: bump version to ${{ steps.bump-version.outputs.version }}"
+          git commit -m "chore: bump version to ${{ steps.bump-version.outputs.version }} [skip ci]"
+          git push origin develop
+
+      - name: Checkout main branch
+        run: |
+          git checkout main
+          git pull origin main
+
+      - name: Merge develop into main
+        run: |
+          git merge develop --no-ff -m "Merge develop into main with version ${{ steps.bump-version.outputs.version }} [skip ci]"
           git push origin main
 
       - name: Get version
