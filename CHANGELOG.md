@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.4.1
+
+### Patch Changes
+
+- 871a814: Fix: Add "isWidgetOpen" prop to the react component
+
 ## 0.4.0
 
 ### Minor Changes
