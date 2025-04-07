@@ -15,6 +15,7 @@ export interface FleekChatboxProps {
   pat: string;
   colors?: Record<string, string>;
   env?: Environment;
+  isWidgetOpen?: boolean;
 }
 
 /**
@@ -68,7 +69,7 @@ class FleekChatbox extends React.Component<FleekChatboxProps> {
   }
 
   renderPreactComponent() {
-    const { agentId, pat, colors, env } = this.props;
+    const { agentId, pat, colors, env, isWidgetOpen = false } = this.props;
 
     if (this.containerRef.current) {
       // Render the Preact component into the container
@@ -79,6 +80,7 @@ class FleekChatbox extends React.Component<FleekChatboxProps> {
           colors,
           useFixedPosition: false,
           env,
+          isWidgetOpen,
         }),
         this.containerRef.current,
       );
