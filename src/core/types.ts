@@ -56,6 +56,7 @@ export interface ChatboxWidgetProps {
   colors?: Record<string, string>;
   useFixedPosition?: boolean;
   env?: Environment; // Optional environment parameter
+  isWidgetOpen?: boolean;
 }
 
 export interface AgentResponse {

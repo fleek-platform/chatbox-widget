@@ -22,8 +22,9 @@ export function ChatboxWidget({
   colors,
   useFixedPosition = true,
   env,
+  isWidgetOpen = false,
 }: ChatboxWidgetProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isWidgetOpen);
   const [messages, setMessages] = useState<Message[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [widgetState, setWidgetState] = useState<WidgetState>('INITIALIZING');
