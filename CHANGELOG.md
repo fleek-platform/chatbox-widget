@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.4.3
+
+### Patch Changes
+
+- 0183784: Fix package.json scripts
+
 ## 0.4.2
 
 ### Patch Changes
