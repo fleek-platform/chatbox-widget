@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.4.2
+
+### Patch Changes
+
+- d110eb3: Fix publishing workflow
+
 ## 0.4.1
 
 ### Patch Changes
