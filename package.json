@@ -12,9 +12,7 @@
       "types": "./dist/npm/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "type": "module",
   "scripts": {
     "build": "rollup -c",
@@ -22,12 +20,12 @@
     "build:npm": "rollup -c --environment BUILD:npm",
     "start": "npm run build && npx live-server --open=test/index.html",
     "dev": "rollup -c --watch & npx live-server --open=test/index.html",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
-    "lint": "biome lint --apply .",
+    "format": "biome check --write --formatter-enabled=true --linter-enabled=false --organize-imports-enabled=true .",
+    "format:check": "biome check --formatter-enabled=true --linter-enabled=false --organize-imports-enabled=true .",
+    "lint": "biome lint --write .",
     "lint:check": "biome lint .",
-    "check": "biome check --apply .",
-    "check:ci": "biome ci .",
+    "fix:style": "biome check --write .",
+    "check:ci": "biome ci --formatter-enabled=true --linter-enabled=true --organize-imports-enabled=true .",
     "prepare": "husky",
     "prepare-release-artifacts": "npm run build",
     "release": "npm run build && npm pack",
@@ -69,9 +67,6 @@
     "preact": "^10.26.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "biome ci",
-      "biome format --write"
-    ]
+    "*.{js,jsx,ts,tsx}": ["npm run fix:style"]
   }
 }

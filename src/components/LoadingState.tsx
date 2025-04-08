@@ -1,5 +1,5 @@
-import styles from './LoadingState.module.css';
 import type { WidgetState } from '../core/types';
+import styles from './LoadingState.module.css';
 
 interface LoadingStateProps {
   widgetState: WidgetState;

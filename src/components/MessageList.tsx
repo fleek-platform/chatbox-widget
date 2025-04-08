@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'preact/hooks';
 import type { Message, WidgetState } from '../core/types';
 import { EmptyState } from './EmptyState';
 import { ErrorDisplay } from './ErrorDisplay';
+import { LoadingState } from './LoadingState';
 import { MessageItem } from './MessageItem';
 import styles from './MessageList.module.css';
-import { LoadingState } from './LoadingState';
 import { TypingIndicator } from './TypingIndicator';
 
 interface MessageListProps {

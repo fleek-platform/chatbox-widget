@@ -1,9 +1,9 @@
 import type { FunctionComponent } from 'preact';
 import { useState } from 'preact/hooks';
 import { useEffect } from 'preact/hooks';
+import { isValidUrl } from '../core/utils';
 import styles from './Avatar.module.css';
 import { GenericAvatar } from './GenericAvatar';
-import { isValidUrl } from '../core/utils';
 
 export interface AvatarProps {
   src: string;
