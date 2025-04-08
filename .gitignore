@@ -6,6 +6,7 @@ yarn-error.log
 
 # Build output
 dist/
+fleek-platform*.tgz
 
 # IDE and editor files
 .idea/

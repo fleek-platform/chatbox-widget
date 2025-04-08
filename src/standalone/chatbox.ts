@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       useFixedPosition = false;
     }
+    if (container) {
+      container.classList.add('fleek-chatbox');
+    }
   }
 
   // If no containerId provided or element not found, create a new container

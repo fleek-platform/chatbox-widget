@@ -18,6 +18,7 @@ function App() {
         colors={{
           'color-primary': '#FF69B4',
         }}
+        isWidgetOpen={true}
       />
     </div>
   );

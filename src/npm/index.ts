@@ -89,7 +89,10 @@ class FleekChatbox extends React.Component<FleekChatboxProps> {
 
   render() {
     // Create a container div that will be used to render the Preact component
-    return React.createElement('div', { ref: this.containerRef });
+    return React.createElement('div', {
+      ref: this.containerRef,
+      className: 'fleek-chatbox',
+    });
   }
 }
 
