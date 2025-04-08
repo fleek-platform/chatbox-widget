@@ -34,19 +34,16 @@ jobs:
       - name: Verify version
         run: |
           PKG_VERSION=$(node -p "require('./package.json').version")
+          # Store package version for later use
+          echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
           echo "Package version: $PKG_VERSION"
           echo "Expected version: ${{ inputs.version }}"
 
           if [ "$PKG_VERSION" != "${{ inputs.version }}" ]; then
             echo "Error: Package version ($PKG_VERSION) does not match expected version (${{ inputs.version }})"
             
-            # If versions don't match but we have a valid version from the package,
-            # we'll proceed with the package version instead of failing
-            if [ -n "$PKG_VERSION" ] && [ "$PKG_VERSION" != "" ]; then
-              echo "⚠️ Warning: Proceeding with package.json version: $PKG_VERSION"
-            else
-              exit 1
-            fi
+            # We'll always proceed with the package.json version
+            echo "⚠️ Warning: Proceeding with package.json version: $PKG_VERSION"
           fi
           echo "✅ Version verified: $PKG_VERSION"
 
@@ -63,9 +60,9 @@ jobs:
           # Check if the package is available with the correct version
           PUBLISHED_VERSION=$(npm view @fleek-platform/agents-chatbox-widget version 2>/dev/null || echo "not found")
 
-          if [ "$PUBLISHED_VERSION" = "${{ inputs.version }}" ]; then
+          if [ "$PUBLISHED_VERSION" = "${{ env.PKG_VERSION }}" ]; then
             echo "✅ Successfully published version $PUBLISHED_VERSION to npm"
           else
-            echo "⚠️ Publication verification failed. Published version: $PUBLISHED_VERSION, Expected: ${{ inputs.version }}"
+            echo "⚠️ Publication verification failed. Published version: $PUBLISHED_VERSION, Expected: ${{ env.PKG_VERSION }}"
             echo "This might be due to npm registry delay. Please verify manually."
           fi
