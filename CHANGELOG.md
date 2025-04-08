@@ -1,6 +1,10 @@
 # @fleek-platform/agents-chatbox-widget
 
-## 0.4.3
+## 0.5.0
+
+### Minor Changes
+
+- 7739a19: fix family-fonts & dev examples
 
 ### Patch Changes
 
