@@ -1,14 +1,8 @@
-import type { Environment, Message, ScriptParams } from './types.js';
+import type { Message, RestApiHost, ScriptParams } from './types.js';
 
-export function getApiBaseUrl(env?: Environment): string {
-  switch (env) {
-    case 'dev':
-      return 'https://api.dev.fleeksandbox.xyz';
-    case 'staging':
-      return 'https://api.staging.fleeksandbox.xyz';
-    default:
-      return 'https://api.fleek.xyz';
-  }
+export function getApiBaseUrl(restApiHost?: RestApiHost): string {
+  // Use restApiHost if provided, otherwise fall back to production URL
+  return restApiHost || 'https://api.fleek.xyz';
 }
 
 export function getScriptParams(): ScriptParams {
@@ -26,7 +20,7 @@ export function getScriptParams(): ScriptParams {
       agentId: url.searchParams.get('agentId'),
       token: url.searchParams.get('token'),
       containerId: url.searchParams.get('containerId') || undefined,
-      env: (url.searchParams.get('env') as Environment) || undefined,
+      restApiHost: url.searchParams.get('restApiHost') || undefined,
     };
 
     // Parse color overrides if provided

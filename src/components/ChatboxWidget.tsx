@@ -21,7 +21,7 @@ export function ChatboxWidget({
   token,
   colors,
   useFixedPosition = true,
-  env,
+  restApiHost,
   isWidgetOpen = false,
 }: ChatboxWidgetProps) {
   const [isOpen, setIsOpen] = useState(isWidgetOpen);
@@ -38,7 +38,7 @@ export function ChatboxWidget({
     createApiClient({
       fleekAgentId: agentId,
       token,
-      baseUrl: getApiBaseUrl(env),
+      baseUrl: getApiBaseUrl(restApiHost),
     }),
   );
 
