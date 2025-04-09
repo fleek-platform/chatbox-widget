@@ -21,9 +21,15 @@ export const createApiClient = ({
 }: ICreateApiClient) => {
   if (!baseUrl || !token || !fleekAgentId) return;
 
+  console.log('🚀 ~ baseUrl:', baseUrl);
+
+  const normalizedBaseUrl = baseUrl.endsWith('/')
+    ? baseUrl.slice(0, -1)
+    : baseUrl;
+
   const fetchAgentStatus = async (): Promise<AgentStatus> => {
     const response = await fetch(
-      `${baseUrl}/${ENDPOINTS.aiAgentStatus.replace(':id', fleekAgentId)}`,
+      `${normalizedBaseUrl}/${ENDPOINTS.aiAgentStatus.replace(':id', fleekAgentId)}`,
       {
         method: 'GET',
         headers: {
@@ -45,7 +51,7 @@ export const createApiClient = ({
     message: string,
   ): Promise<string> => {
     const response = await fetch(
-      `${baseUrl}/${ENDPOINTS.aiAgentMessage.replace(':id', fleekAgentId).replace(':elizaId', elizaId)}`,
+      `${normalizedBaseUrl}/${ENDPOINTS.aiAgentMessage.replace(':id', fleekAgentId).replace(':elizaId', elizaId)}`,
       {
         method: 'POST',
         headers: {
@@ -63,7 +69,7 @@ export const createApiClient = ({
 
   const fetchAgentDetails = async (): Promise<AgentResponse> => {
     const responseAgentDetails = await fetch(
-      `${baseUrl}/${ENDPOINTS.aiAgentPublicDetails.replace(':id', fleekAgentId)}`,
+      `${normalizedBaseUrl}/${ENDPOINTS.aiAgentPublicDetails.replace(':id', fleekAgentId)}`,
       {
         method: 'GET',
         headers: {
@@ -74,7 +80,7 @@ export const createApiClient = ({
     );
 
     const responseAgent = await fetch(
-      `${baseUrl}/${ENDPOINTS.aiAgentProxy.replace(':id', fleekAgentId)}`,
+      `${normalizedBaseUrl}/${ENDPOINTS.aiAgentProxy.replace(':id', fleekAgentId)}`,
       {
         method: 'GET',
         headers: {
