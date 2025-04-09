@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.7.1
+
+### Patch Changes
+
+- 22a3a9c: update restApiHost on readme and test files
+
 ## 0.7.0
 
 ### Minor Changes
