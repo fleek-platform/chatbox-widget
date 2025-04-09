@@ -95,15 +95,20 @@ jobs:
             exit 1
           fi
 
-          if ! git merge --ff-only ${{ github.event.inputs.commitHash }}; then
-            echo "👹 Oops! Failed to merge into main for some reason..."
+          echo "Merging develop commit ${{ github.event.inputs.commitHash }} into main with a merge commit"
+          # Configure git to create a merge commit even if there are conflicts
+          git config --global merge.conflictstyle merge
 
+          # Attempt the merge with --no-ff to ensure a merge commit is created
+          if ! git merge --no-ff -m "Merge develop commit ${{ github.event.inputs.commitHash }} into main" "${{ github.event.inputs.commitHash }}"; then
+            echo "👹 Oops! Merge conflicts detected. The workflow cannot automatically resolve conflicts."
+            
             exit 1
           fi
 
           if ! git push origin "${{ env.RELEASE_BRANCH }}"; then
             echo "👹 Oops! Failed to push changes to the ${{ env.RELEASE_BRANCH }} branch for some reason..."
-
+            
             exit 1
           fi
 

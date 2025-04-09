@@ -14,7 +14,7 @@ function App() {
 
       <FleekChatbox
         agentId="123"
-        pat="abc123"
+        token="abc123"
         colors={{
           'color-primary': '#FF69B4',
         }}
