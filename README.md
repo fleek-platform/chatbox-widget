@@ -163,13 +163,13 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 
 - `agentId`: Your Fleek agent ID
 - `token`: Your TOKEN for authentication
-- `env` (optional): Environment to connect to (`dev`, `staging`, or `prod` (default))
+- `restApiHost` (optional): Custom API host URL (defaults to production URL if not provided)
 
 Example:
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&token=abc123&env=staging"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&token=abc123&restApiHost=https://api.custom-domain.com"
   async
 ></script>
 ```
@@ -188,7 +188,7 @@ function App() {
       <FleekChatbox
         agentId="YOUR_AGENT_ID"
         token="YOUR_TOKEN"
-        env="staging"
+        restApiHost="https://api.custom-domain.com"
         colors={{
           'color-primary': '#FF69B4',
         }}
@@ -205,7 +205,7 @@ export default App;
 - `agentId` (required): Your Fleek agent ID
 - `token` (required): Your token for authentication
 - `colors` (optional): An object with color overrides
-- `env` (optional): Environment to connect to (`dev`, `staging`, or `prod` (default))
+- `restApiHost` (optional): Custom API host URL (defaults to production URL if not provided)
 
 Example:
 
@@ -213,7 +213,7 @@ Example:
 <FleekChatbox
   agentId="123"
   token="abc123"
-  env="dev"
+  restApiHost="https://api.custom-domain.com"
   colors={{
     'accent-9': '#ff0000',
     'neutral-3': '#f5f5f5',
@@ -221,17 +221,20 @@ Example:
 />
 ```
 
-## Environment Configuration
+## API Host Configuration
 
-You can specify which environment the widget should connect to by using the `env` parameter:
+You can specify a custom API host for the widget to connect to by using the `restApiHost` parameter:
 
-- `prod` (default): Production - https://api.fleek.xyz
-- `staging`: Staging - https://api.staging.fleeksandbox.xyz
-- `dev`: Development - https://api.dev.fleeksandbox.xyz
+```html
+<script
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&restApiHost=https://api.custom-domain.com"
+  async
+></script>
+```
 
-If no environment is specified, the widget will connect to the production environment.
+If no `restApiHost` is specified, the widget will connect to the production API at `https://api.fleek.xyz`.
 
-This is useful for testing your integration against different environments before deploying to production.
+This is useful when you need to connect to a custom API endpoint or a self-hosted version of the Fleek API.
 
 ## How to Override Colors
 
