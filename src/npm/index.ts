@@ -1,7 +1,7 @@
 import { h, render } from 'preact';
 import * as React from 'react';
 import { ChatboxWidget } from '../components/ChatboxWidget.js';
-import type { Environment } from '../core/types.js';
+import type { RestApiHost } from '../core/types.js';
 
 // Import global CSS
 import '../global.css';
@@ -14,7 +14,7 @@ export interface FleekChatboxProps {
   agentId: string;
   token: string;
   colors?: Record<string, string>;
-  env?: Environment;
+  restApiHost?: RestApiHost;
   isWidgetOpen?: boolean;
 }
 
@@ -69,7 +69,13 @@ class FleekChatbox extends React.Component<FleekChatboxProps> {
   }
 
   renderPreactComponent() {
-    const { agentId, token, colors, env, isWidgetOpen = false } = this.props;
+    const {
+      agentId,
+      token,
+      colors,
+      restApiHost,
+      isWidgetOpen = false,
+    } = this.props;
 
     if (this.containerRef.current) {
       // Render the Preact component into the container
@@ -79,7 +85,7 @@ class FleekChatbox extends React.Component<FleekChatboxProps> {
           token,
           colors,
           useFixedPosition: false,
-          env,
+          restApiHost,
           isWidgetOpen,
         }),
         this.containerRef.current,

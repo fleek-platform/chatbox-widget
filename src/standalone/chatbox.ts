@@ -9,7 +9,8 @@ console.log('Chatbox script loaded (Preact version)');
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM fully loaded');
 
-  const { agentId, token, colors, containerId, env } = getScriptParams();
+  const { agentId, token, colors, containerId, restApiHost } =
+    getScriptParams();
 
   if (!agentId || !token) {
     console.error(
@@ -52,7 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log(`Initializing ChatboxWidget with agentId: ${agentId}`);
   render(
-    h(ChatboxWidget, { agentId, token, colors, useFixedPosition, env }),
+    h(ChatboxWidget, {
+      agentId,
+      token,
+      colors,
+      useFixedPosition,
+      restApiHost,
+    }),
     container,
   );
 });

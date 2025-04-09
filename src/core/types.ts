@@ -40,14 +40,15 @@ export interface UIComponents {
   sendButton: HTMLButtonElement;
 }
 
-export type Environment = 'dev' | 'staging' | 'prod';
+// restApiHost can be used to directly specify the API base URL
+export type RestApiHost = string;
 
 export interface ScriptParams {
   agentId: string | null; // Fleek agent ID from script tag
   token: string | null; // Token for BE proxy
   colors?: Record<string, string>; // Color overrides
   containerId?: string; // Optional ID of an existing element to render into
-  env?: Environment; // Optional environment parameter
+  restApiHost?: RestApiHost; // Optional direct API host URL
 }
 
 export interface ChatboxWidgetProps {
@@ -55,7 +56,7 @@ export interface ChatboxWidgetProps {
   token: string;
   colors?: Record<string, string>;
   useFixedPosition?: boolean;
-  env?: Environment; // Optional environment parameter
+  restApiHost?: RestApiHost; // Optional direct API host URL
   isWidgetOpen?: boolean;
 }
 
