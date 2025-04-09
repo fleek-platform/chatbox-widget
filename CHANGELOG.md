@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.7.3
+
+### Patch Changes
+
+- 7d9ecdc: normalize baseURl
+
 ## 0.7.2
 
 ### Patch Changes
