@@ -23,8 +23,8 @@ To set up the project for development:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/fleek-chatbox-widget.git
-cd fleek-chatbox-widget
+git clone https://github.com/fleek-platform/chatbox-widget.git
+cd chatbox-widget
 
 # Install dependencies
 npm install
@@ -34,7 +34,7 @@ npm install
 
 ```bash
 # Install from npm
-npm install fleek-chatbox-widget
+npm install @fleek-platform/agents-chatbox-widget
 ```
 
 ## Development
@@ -139,7 +139,7 @@ For production use, we recommend using a specific version of the standalone scri
 
 ```html
 <script
-  src="https://[username].github.io/[repo-name]/chatbox-1.0.0.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
+  src="https://github.com/fleek-platform/chatbox-widget/releases/download/v1.0.0/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
   async
 ></script>
 ```
@@ -154,24 +154,31 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
+  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
   async
 ></script>
 ```
 
-#### Required Parameters
+#### Parameters
 
-- `agentId`: Your Fleek agent ID
-- `token`: Your TOKEN for authentication
+- `agentId` (required): Your Fleek agent ID
+- `token` (required): Your TOKEN for authentication
 - `restApiHost` (optional): Custom API host URL (defaults to production URL if not provided)
+- `containerId` (optional): ID of an existing element to render the widget into
 
 Example:
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&token=abc123&restApiHost=https://api.custom-domain.com"
+  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=123&token=abc123&restApiHost=https://api.custom-domain.com&containerId=chat-container"
   async
 ></script>
+```
+
+When using the `containerId` parameter, you need to have an element with that ID in your HTML:
+
+```html
+<div id="chat-container"></div>
 ```
 
 ### Option 2: React Component
@@ -180,7 +187,7 @@ To use the Fleek Chatbox Widget in a React application:
 
 ```jsx
 import React from 'react';
-import FleekChatbox from 'fleek-chatbox-widget';
+import FleekChatbox from '@fleek-platform/agents-chatbox-widget';
 
 function App() {
   return (
@@ -192,6 +199,7 @@ function App() {
         colors={{
           'color-primary': '#FF69B4',
         }}
+        isWidgetOpen={false}
       />
     </div>
   );
@@ -206,6 +214,7 @@ export default App;
 - `token` (required): Your token for authentication
 - `colors` (optional): An object with color overrides
 - `restApiHost` (optional): Custom API host URL (defaults to production URL if not provided)
+- `isWidgetOpen` (optional): Boolean to control if the widget is initially open (default: false)
 
 Example:
 
@@ -218,6 +227,7 @@ Example:
     'accent-9': '#ff0000',
     'neutral-3': '#f5f5f5',
   }}
+  isWidgetOpen={true}
 />
 ```
 
@@ -227,7 +237,7 @@ You can specify a custom API host for the widget to connect to by using the `res
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&restApiHost=https://api.custom-domain.com"
+  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&restApiHost=https://api.custom-domain.com"
   async
 ></script>
 ```
@@ -244,7 +254,7 @@ You can customize the appearance of the widget by overriding the default colors.
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
+  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
   async
 ></script>
 ```
@@ -284,7 +294,7 @@ When using the React component, you can pass the colors directly as an object:
 - **Accent colors**: `--accent-1` through `--accent-12`
 - **Warning colors**: `--warning-1` through `--warning-12`
 
-For a complete list of available variables, see the [theme usage documentation](docs/theme-usage.md).
+These color variables can be used to customize the appearance of the widget to match your website's design.
 
 ## Troubleshooting
 
@@ -309,18 +319,9 @@ For a complete list of available variables, see the [theme usage documentation](
 - Check that the agent ID is correct and the agent is active
 - Look for network errors in the browser's developer tools
 
-### Debugging
+### Browser Console Logs
 
-To enable debug mode in the standalone script, add `debug=true` to the script parameters:
-
-```html
-<script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY&debug=true"
-  async
-></script>
-```
-
-This will output additional information to the browser console.
+The widget outputs information to the browser console that can help with troubleshooting. Check your browser's developer tools console for messages related to the widget's initialization and operation.
 
 ## How to Contribute
 
