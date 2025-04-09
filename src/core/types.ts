@@ -44,7 +44,7 @@ export type Environment = 'dev' | 'staging' | 'prod';
 
 export interface ScriptParams {
   agentId: string | null; // Fleek agent ID from script tag
-  pat: string | null; // PAT for BE proxy
+  token: string | null; // Token for BE proxy
   colors?: Record<string, string>; // Color overrides
   containerId?: string; // Optional ID of an existing element to render into
   env?: Environment; // Optional environment parameter
@@ -52,7 +52,7 @@ export interface ScriptParams {
 
 export interface ChatboxWidgetProps {
   agentId: string;
-  pat: string;
+  token: string;
   colors?: Record<string, string>;
   useFixedPosition?: boolean;
   env?: Environment; // Optional environment parameter

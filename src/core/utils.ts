@@ -19,12 +19,12 @@ export function getScriptParams(): ScriptParams {
       )) as HTMLScriptElement | null;
     if (!script) {
       console.error('No script tag found for chatbox.js');
-      return { agentId: null, pat: null };
+      return { agentId: null, token: null };
     }
     const url = new URL(script.src);
     const params: ScriptParams = {
       agentId: url.searchParams.get('agentId'),
-      pat: url.searchParams.get('pat'),
+      token: url.searchParams.get('token'),
       containerId: url.searchParams.get('containerId') || undefined,
       env: (url.searchParams.get('env') as Environment) || undefined,
     };
@@ -43,7 +43,7 @@ export function getScriptParams(): ScriptParams {
     return params;
   } catch (e) {
     console.error('Error parsing script params:', e);
-    return { agentId: null, pat: null };
+    return { agentId: null, token: null };
   }
 }
 

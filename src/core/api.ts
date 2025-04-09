@@ -2,23 +2,24 @@ import type { AgentResponse, AgentStatus } from './types.js';
 
 const ENDPOINTS = {
   aiAgentStatus: 'api/v1/ai-agents/:id/status',
-  aiAgentDetails: 'api/v1/ai-agents/:id',
+  aiAgentDetails: 'api/v1/ai-agents/:id/public',
+  aiAgentPublicDetails: 'api/v1/ai-agents/:id/public',
   aiAgentMessage: 'api/v1/ai-agents/:id/api/:elizaId/message',
   aiAgentProxy: 'api/v1/ai-agents/:id/api/agents',
 };
 
 interface ICreateApiClient {
   baseUrl: string;
-  pat: string;
+  token: string;
   fleekAgentId: string;
 }
 
 export const createApiClient = ({
   baseUrl,
-  pat,
+  token,
   fleekAgentId,
 }: ICreateApiClient) => {
-  if (!baseUrl || !pat || !fleekAgentId) return;
+  if (!baseUrl || !token || !fleekAgentId) return;
 
   const fetchAgentStatus = async (): Promise<AgentStatus> => {
     const response = await fetch(
@@ -26,8 +27,7 @@ export const createApiClient = ({
       {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${pat}`,
-          'X-API-Key': pat,
+          'X-Agent-Token': token,
           'Content-Type': 'application/json',
         },
       },
@@ -49,8 +49,7 @@ export const createApiClient = ({
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${pat}`,
-          'X-API-Key': pat,
+          'X-Agent-Token': token,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ senderId: user, roomId, text: message }),
@@ -63,13 +62,23 @@ export const createApiClient = ({
   };
 
   const fetchAgentDetails = async (): Promise<AgentResponse> => {
+    const responseAgentDetails = await fetch(
+      `${baseUrl}/${ENDPOINTS.aiAgentPublicDetails.replace(':id', fleekAgentId)}`,
+      {
+        method: 'GET',
+        headers: {
+          'X-Agent-Token': token,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
     const responseAgent = await fetch(
       `${baseUrl}/${ENDPOINTS.aiAgentProxy.replace(':id', fleekAgentId)}`,
       {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${pat}`,
-          'X-API-Key': pat,
+          'X-Agent-Token': token,
           'Content-Type': 'application/json',
         },
       },
@@ -80,18 +89,6 @@ export const createApiClient = ({
     const agentData = await responseAgent.json();
     const elizaId = agentData.agents[0].id;
     console.log('🚀 ~ fetchAgentDetails ~ agentData:', agentData);
-
-    const responseAgentDetails = await fetch(
-      `${baseUrl}/${ENDPOINTS.aiAgentDetails.replace(':id', fleekAgentId)}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${pat}`,
-          'X-API-Key': pat,
-          'Content-Type': 'application/json',
-        },
-      },
-    );
 
     if (!responseAgentDetails.ok)
       throw new Error('Failed to fetch agent details');

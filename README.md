@@ -139,7 +139,7 @@ For production use, we recommend using a specific version of the standalone scri
 
 ```html
 <script
-  src="https://[username].github.io/[repo-name]/chatbox-1.0.0.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY"
+  src="https://[username].github.io/[repo-name]/chatbox-1.0.0.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
   async
 ></script>
 ```
@@ -154,7 +154,7 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
   async
 ></script>
 ```
@@ -162,14 +162,14 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 #### Required Parameters
 
 - `agentId`: Your Fleek agent ID
-- `pat`: Your PAT for authentication
+- `token`: Your TOKEN for authentication
 - `env` (optional): Environment to connect to (`dev`, `staging`, or `prod` (default))
 
 Example:
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&pat=abc123&env=staging"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=123&token=abc123&env=staging"
   async
 ></script>
 ```
@@ -187,7 +187,7 @@ function App() {
     <div className="App">
       <FleekChatbox
         agentId="YOUR_AGENT_ID"
-        pat="YOUR_API_KEY"
+        token="YOUR_TOKEN"
         env="staging"
         colors={{
           'color-primary': '#FF69B4',
@@ -203,7 +203,7 @@ export default App;
 #### Props
 
 - `agentId` (required): Your Fleek agent ID
-- `pat` (required): Your API key for authentication
+- `token` (required): Your token for authentication
 - `colors` (optional): An object with color overrides
 - `env` (optional): Environment to connect to (`dev`, `staging`, or `prod` (default))
 
@@ -212,7 +212,7 @@ Example:
 ```jsx
 <FleekChatbox
   agentId="123"
-  pat="abc123"
+  token="abc123"
   env="dev"
   colors={{
     'accent-9': '#ff0000',
@@ -241,7 +241,7 @@ You can customize the appearance of the widget by overriding the default colors.
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
   async
 ></script>
 ```
@@ -267,7 +267,7 @@ When using the React component, you can pass the colors directly as an object:
 ```jsx
 <FleekChatbox
   agentId="123"
-  pat="abc123"
+  token="abc123"
   colors={{
     'accent-9': '#ff0000',
     'neutral-3': '#f5f5f5',
@@ -290,7 +290,7 @@ For a complete list of available variables, see the [theme usage documentation](
 #### Widget doesn't appear on the page
 
 - Check that the script URL is correct
-- Verify that your `agentId` and `pat` are valid
+- Verify that your `agentId` and `token` are valid
 - Check the browser console for any JavaScript errors
 - Ensure there are no Content Security Policy (CSP) restrictions blocking the script
 
@@ -312,7 +312,7 @@ To enable debug mode in the standalone script, add `debug=true` to the script pa
 
 ```html
 <script
-  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&pat=YOUR_API_KEY&debug=true"
+  src="https://cdn.fleek.xyz/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY&debug=true"
   async
 ></script>
 ```

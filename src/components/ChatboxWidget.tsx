@@ -18,7 +18,7 @@ import { ToggleButton } from './ToggleButton.js';
 
 export function ChatboxWidget({
   agentId,
-  pat,
+  token,
   colors,
   useFixedPosition = true,
   env,
@@ -37,7 +37,7 @@ export function ChatboxWidget({
   const [apiClient] = useState(() =>
     createApiClient({
       fleekAgentId: agentId,
-      pat,
+      token,
       baseUrl: getApiBaseUrl(env),
     }),
   );
