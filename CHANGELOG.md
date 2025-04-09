@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.6.0
+
+### Minor Changes
+
+- de1163a: update workflow and be integration
+
 ## 0.5.0
 
 ### Minor Changes
