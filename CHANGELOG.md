@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.7.0
+
+### Minor Changes
+
+- 0c2d97c: Use restApiHost instead of hardcoded urls
+
 ## 0.6.0
 
 ### Minor Changes
