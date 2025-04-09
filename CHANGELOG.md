@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.7.2
+
+### Patch Changes
+
+- 8858635: fix formatting
+
 ## 0.7.1
 
 ### Patch Changes
