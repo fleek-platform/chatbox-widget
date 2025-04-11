@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
   workflow_dispatch:
     branches:
       - main
@@ -18,9 +19,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
+          node-version: '20'
+
+      - name: Create .npmrc file
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.FLEEKXYZ_NPM_TOKEN }}" > .npmrc
+          echo "@fleek-platform:registry=https://registry.npmjs.org" >> .npmrc
+          cat .npmrc
 
       - name: Install dependencies
         run: npm ci
@@ -30,5 +35,3 @@ jobs:
 
       - name: Publish to npm
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
