@@ -1,6 +1,6 @@
 {
   "name": "@fleek-platform/agents-chatbox-widget",
-  "version": "0.8.3",
+  "version": "0.8.5",
   "description": "A standalone chatbox widget for Fleek agents",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

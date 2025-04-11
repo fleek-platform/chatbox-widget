@@ -9,7 +9,7 @@ export function getScriptParams(): ScriptParams {
   try {
     const script = (document.currentScript ||
       document.querySelector(
-        'script[src*="chatbox.js"]',
+        'script[src*="chatbox.min.js"]',
       )) as HTMLScriptElement | null;
     if (!script) {
       console.error('No script tag found for chatbox.js');
