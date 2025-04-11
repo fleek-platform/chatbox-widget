@@ -31,7 +31,6 @@ jobs:
       - name: Verify version
         run: |
           PKG_VERSION=$(node -p "require('./package.json').version")
-          # Store package version for later use
           echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
           echo "Package version: $PKG_VERSION"
           echo "Expected version: ${{ inputs.version }}"
@@ -39,7 +38,6 @@ jobs:
           if [ "$PKG_VERSION" != "${{ inputs.version }}" ]; then
             echo "Error: Package version ($PKG_VERSION) does not match expected version (${{ inputs.version }})"
             
-            # We'll always proceed with the package.json version
             echo "⚠️ Warning: Proceeding with package.json version: $PKG_VERSION"
           fi
           echo "✅ Version verified: $PKG_VERSION"
@@ -47,14 +45,12 @@ jobs:
       - name: Publish to npm
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.FLEEKXYZ_NPM_TOKEN }}
 
       - name: Verify publication
         run: |
-          # Wait a bit for npm to update
           sleep 10
 
-          # Check if the package is available with the correct version
           PUBLISHED_VERSION=$(npm view @fleek-platform/agents-chatbox-widget version 2>/dev/null || echo "not found")
 
           if [ "$PUBLISHED_VERSION" = "${{ env.PKG_VERSION }}" ]; then
