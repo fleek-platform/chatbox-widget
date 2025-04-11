@@ -118,17 +118,6 @@ This project uses [Changesets](https://github.com/changesets/changesets) for ver
      - Publish to npm
      - Deploy the standalone script to GitHub Pages
 
-### Manual Triggering
-
-You can also manually trigger the release process:
-
-1. Go to your GitHub repository
-2. Navigate to the "Actions" tab
-3. Select the "Release" workflow
-4. Click on "Run workflow"
-5. Optionally provide a reason for the manual trigger
-6. Click "Run workflow" to start the process
-
 ### Accessing Versioned Builds
 
 For production use, we recommend using a specific version of the standalone script:
