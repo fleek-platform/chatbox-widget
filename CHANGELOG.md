@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.8.3
+
+### Patch Changes
+
+- 4c13307: CI/CD amends
+
 ## 0.8.0
 
 ### Minor Changes
