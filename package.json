@@ -68,6 +68,8 @@
     "preact": "^10.26.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": ["npm run fix:style"]
+    "*.{js,jsx,ts,tsx}": [
+      "npm run fix:style"
+    ]
   }
 }
