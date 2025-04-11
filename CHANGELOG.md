@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.9.0
+
+### Minor Changes
+
+- 361d980: Replace crypto uuid to support http (not secure)
+
 ## 0.8.3
 
 ### Patch Changes

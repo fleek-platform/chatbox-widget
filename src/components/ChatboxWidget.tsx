@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'preact/hooks';
+import { v4 as uuid } from 'uuid';
 import { createApiClient } from '../core/api.js';
 import type {
   ChatboxWidgetProps,
@@ -50,7 +51,7 @@ export function ChatboxWidget({
     if (savedRoomId) {
       setRoomId(savedRoomId);
     } else {
-      savedRoomId = crypto.randomUUID();
+      savedRoomId = uuid();
       saveRoomId(savedRoomId);
       setRoomId(savedRoomId);
     }
