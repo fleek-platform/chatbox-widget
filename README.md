@@ -1,4 +1,7 @@
-# Fleek Chatbox Widget
+# ⚡️Fleek Platform Agents Chatbox Widget
+
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A standalone widget that allows users to embed a chatbox on any website to interact with a Fleek agent. This lightweight, customizable widget can be easily integrated into any website with a simple script tag or imported as a React component.
 
@@ -22,18 +25,15 @@ The Fleek Chatbox Widget is a drop-in solution for adding AI chat capabilities t
 To set up the project for development:
 
 ```bash
-# Clone the repository
 git clone https://github.com/fleek-platform/chatbox-widget.git
 cd chatbox-widget
 
-# Install dependencies
 npm install
 ```
 
 ### For Usage in a React Project
 
 ```bash
-# Install from npm
 npm install @fleek-platform/agents-chatbox-widget
 ```
 
@@ -42,7 +42,6 @@ npm install @fleek-platform/agents-chatbox-widget
 To start the development server:
 
 ```bash
-# Run the development server with live reloading
 npm run dev
 ```
 
@@ -83,19 +82,16 @@ fleek-chatbox-widget/
 To build the project for production:
 
 ```bash
-# Build both standalone script and npm package
 npm run build
 
-# Build only the standalone script
 npm run build:standalone
 
-# Build only the npm package
 npm run build:npm
 ```
 
 This creates the following files in the `dist/` directory:
 
-- `dist/chatbox.js` - The standalone script to be included on websites
+- `dist/chatbox.min.js` - The standalone script to be included on websites
 - `dist/index.esm.js` - ES module for npm package
 - `dist/index.cjs.js` - CommonJS module for npm package
 - `dist/index.d.ts` - TypeScript declarations
@@ -139,12 +135,13 @@ For production use, we recommend using a specific version of the standalone scri
 
 ```html
 <script
-  src="https://github.com/fleek-platform/chatbox-widget/releases/download/v1.0.0/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
+  src="https://unpkg.com/@fleek-platform/agents-chatbox-widget@<VERSION>/dist/chatbox.min.js?agentId=<YOUR_AGENT_ID>&token=<YOUR_API_KEY>"
   async
 ></script>
 ```
 
-Replace `1.0.0` with the specific version you want to use.
+> [!NOTE]
+> Replace `<VERSION>`, `<YOUR_AGENT_ID>` and `<YOUR_API_KEY>` with your own details.
 
 ## Usage Options
 
@@ -154,10 +151,13 @@ To add the Fleek Chatbox Widget to your website using the standalone script, inc
 
 ```html
 <script
-  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_API_KEY"
+  src="https://unpkg.com/@fleek-platform/agents-chatbox-widget@<VERSION>/dist/chatbox.min.js?agentId=<YOUR_AGENT_ID>&token=<YOUR_API_KEY>&containerId=<YOUR_HTML_ELEMENT_ID>"
   async
 ></script>
 ```
+
+> [!NOTE]
+> Replace `<VERSION>`, `<YOUR_AGENT_ID>`, `<YOUR_API_KEY>` and `<YOUR_HTML_ELEMENT_ID>` with your own details.
 
 #### Parameters
 
@@ -170,10 +170,13 @@ Example:
 
 ```html
 <script
-  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=123&token=abc123&restApiHost=https://api.custom-domain.com&containerId=chat-container"
+  src="https://unpkg.com/@fleek-platform/agents-chatbox-widget@1.0.0/dist/chatbox.min.js?agentId=abcdef&token=abcdef&containerId=chat-container"
   async
 ></script>
 ```
+
+> [!WARNING]
+> You must replace the values in the script `src` with your own details.
 
 When using the `containerId` parameter, you need to have an element with that ID in your HTML:
 
@@ -237,7 +240,7 @@ You can specify a custom API host for the widget to connect to by using the `res
 
 ```html
 <script
-  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&restApiHost=https://api.custom-domain.com"
+  src="https://unpkg.com/@fleek-platform/agents-chatbox-widget@<VERSION>/dist/chatbox.min.js?agentId=<YOUR_AGENT_ID>&token=<YOUR_TOKEN>&restApiHost=https://<REST_API>"
   async
 ></script>
 ```
@@ -254,10 +257,13 @@ You can customize the appearance of the widget by overriding the default colors.
 
 ```html
 <script
-  src="https://github.com/fleek-platform/chatbox-widget/releases/download/latest/chatbox.js?agentId=YOUR_AGENT_ID&token=YOUR_TOKEN&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
+  src="https://unpkg.com/@fleek-platform/agents-chatbox-widget@<VERSION>/dist/chatbox.min.js?agentId=<YOUR_AGENT_ID>&token=<YOUR_API_TOKEN>&colors=%7B%22accent-9%22%3A%22%23ff0000%22%2C%22neutral-3%22%3A%22%23f5f5f5%22%7D"
   async
 ></script>
 ```
+
+> [!NOTE]
+> Replace `<VERSION>`, `<YOUR_AGENT_ID>` and `<YOUR_API_KEY>`with your own details.
 
 The `colors` parameter is a URL-encoded JSON object where:
 
@@ -323,21 +329,6 @@ These color variables can be used to customize the appearance of the widget to m
 
 The widget outputs information to the browser console that can help with troubleshooting. Check your browser's developer tools console for messages related to the widget's initialization and operation.
 
-## How to Contribute
-
-Contributions to the Fleek Chatbox Widget are welcome! Here's how you can contribute:
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-new-feature`
-3. Make your changes
-4. Run the linter: `npm run lint`
-5. Build the project: `npm run build`
-6. Test your changes
-7. Add a changeset to describe your changes: `npx changeset`
-8. Commit your changes: `git commit -m 'Add some feature'`
-9. Push to the branch: `git push origin feature/my-new-feature`
-10. Submit a pull request
-
 ### Development Guidelines
 
 - Follow the existing code style
@@ -351,19 +342,49 @@ Contributions to the Fleek Chatbox Widget are welcome! Here's how you can contri
 This project uses Biome for formatting and linting:
 
 ```bash
-# Format code
 npm run format
 
-# Check formatting
 npm run format:check
 
-# Lint code
 npm run lint
 
-# Check linting
 npm run lint:check
 ```
 
-## License
+## 🙏 Contributing
 
-[MIT License](LICENSE)
+This section guides you through the process of contributing to our open-source project. From creating a feature branch to submitting a pull request, get started by:
+
+1. Fork the project [here](https://github.com/fleekxyz/cli)
+2. Create your feature branch using our [branching strategy](#branching-strategy), e.g. `git checkout -b feat/my-new-feature`
+3. Run the tests: `pnpm test`
+4. Commit your changes by following our [commit conventions](#conventional-commits), e.g. `git commit -m 'chore: 🤖 my contribution description'`
+5. Push to the branch, e.g. `git push origin feat/my-new-feature`
+6. Create new Pull Request following the corresponding template guidelines
+
+### Branching strategy
+
+The develop branch serves as the main integration branch for features, enhancements, and fixes. It is always in a deployable state and represents the latest development version of the application.
+
+Feature branches are created from the develop branch and are used to develop new features or enhancements. They should be named according to the type of work being done and the scope of the feature and in accordance with conventional commits [here](#conventional-commits).
+
+### Conventional commits
+
+We prefer to commit our work following [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0) conventions. Conventional Commits are a simple way to write commit messages that both people and computers can understand. It help us keep track fo changes in a consistent manner, making it easier to see what was added, changed, or fixed in each commit or update.
+
+The commit messages are formatted as **[type]/[scope]**
+The **type** is a short descriptor indicating the nature of the work (e.g., feat, fix, docs, style, refactor, test, chore). This follows the conventional commit types.
+
+The **scope** is a more detailed description of the feature or fix. This could be the component or part of the codebase affected by the change.
+
+Here's an example of different conventional commits messages that you should follow:
+
+```txt
+test: 💍 Adding missing tests
+feat: 🎸 A new feature
+fix: 🐛 A bug fix
+chore: 🤖 Build process or auxiliary tool changes
+docs: 📝 Documentation only changes
+refactor: 💡 A code change that neither fixes a bug or adds a feature
+style: 💄 Markup, white-space, formatting, missing semi-colons...
+```
