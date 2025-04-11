@@ -1,5 +1,11 @@
 # @fleek-platform/agents-chatbox-widget
 
+## 0.8.0
+
+### Minor Changes
+
+- a7ade22: Change distribution name, Favour JS CDN for usage, revised documentation
+
 ## 0.7.3
 
 ### Patch Changes
