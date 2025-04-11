@@ -15,6 +15,7 @@ import {
 import { ChatWindow } from './ChatWindow.js';
 import styles from './ChatboxWidget.module.css';
 import { ToggleButton } from './ToggleButton.js';
+import { v4 as uuid } from 'uuid';
 
 export function ChatboxWidget({
   agentId,
@@ -50,7 +51,7 @@ export function ChatboxWidget({
     if (savedRoomId) {
       setRoomId(savedRoomId);
     } else {
-      savedRoomId = crypto.randomUUID();
+      savedRoomId = uuid();
       saveRoomId(savedRoomId);
       setRoomId(savedRoomId);
     }
