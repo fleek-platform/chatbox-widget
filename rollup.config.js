@@ -7,31 +7,25 @@ import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 
-// Get package version for versioned builds
-const pkg = JSON.parse(readFileSync('./package.json', 'utf8'));
-const version = pkg.version;
+const { version } = JSON.parse(readFileSync('./package.json', 'utf8'));
 
-// Determine if this is a production build (you might set this via environment variable)
 const production = !process.env.ROLLUP_WATCH;
 
-// Shared plugins for all builds
 const createPlugins = (isNpmBuild = false) => [
   resolve({
     browser: true,
-    // For npm builds, we want to externalize react and react-dom
     ...(isNpmBuild && {
       dedupe: ['preact', 'preact/compat', 'react', 'react-dom'],
     }),
   }),
-  commonjs(), // Convert CommonJS modules
+  commonjs(),
   typescript({
     tsconfig: './tsconfig.json',
-    // Ensure TS plugin handles JSX correctly based on tsconfig
   }),
   postcss({
-    modules: true, // Enable CSS Modules
-    extract: false, // Inject styles into <head>
-    minimize: production, // Minimize CSS in production
+    modules: true,
+    extract: false,
+    minimize: production,
     sourceMap: !production,
   }),
   replace({
@@ -40,7 +34,6 @@ const createPlugins = (isNpmBuild = false) => [
       production ? 'production' : 'development',
     ),
   }),
-  // For npm builds, alias react to preact/compat
   ...(isNpmBuild
     ? [
         alias({
@@ -51,23 +44,15 @@ const createPlugins = (isNpmBuild = false) => [
         }),
       ]
     : []),
-  // Minify in production
   production && terser(),
 ];
 
 export default [
-  // Standalone build (IIFE)
   {
     input: 'src/standalone/chatbox.ts',
     output: [
       {
-        file: 'dist/chatbox.js',
-        format: 'iife',
-        name: 'FleekChatbox',
-        sourcemap: !production,
-      },
-      {
-        file: `dist/chatbox-${version}.js`,
+        file: 'dist/chatbox.min.js',
         format: 'iife',
         name: 'FleekChatbox',
         sourcemap: !production,
@@ -75,7 +60,6 @@ export default [
     ],
     plugins: createPlugins(false),
   },
-  // NPM library build (ESM)
   {
     input: 'src/npm/index.ts',
     output: {
@@ -86,7 +70,6 @@ export default [
     external: ['react', 'react-dom'],
     plugins: createPlugins(true),
   },
-  // NPM library build (CJS)
   {
     input: 'src/npm/index.ts',
     output: {

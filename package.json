@@ -1,6 +1,6 @@
 {
   "name": "@fleek-platform/agents-chatbox-widget",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "description": "A standalone chatbox widget for Fleek agents",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -12,14 +12,13 @@
       "types": "./dist/npm/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist", "README.md"],
   "type": "module",
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run clean:dist && rollup -c",
     "build:standalone": "rollup -c --environment BUILD:standalone",
     "build:npm": "rollup -c --environment BUILD:npm",
+    "clean:dist": "rm -rf dist",
     "start": "npm run build && npx live-server --open=test/index.html",
     "dev": "rollup -c --watch & npx live-server --open=test/index.html",
     "format": "biome check --write --formatter-enabled=true --linter-enabled=false --organize-imports-enabled=true .",
@@ -69,8 +68,6 @@
     "preact": "^10.26.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "npm run fix:style"
-    ]
+    "*.{js,jsx,ts,tsx}": ["npm run fix:style"]
   }
 }
