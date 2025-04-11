@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'preact/hooks';
+import { v4 as uuid } from 'uuid';
 import { createApiClient } from '../core/api.js';
 import type {
   ChatboxWidgetProps,
@@ -15,7 +16,6 @@ import {
 import { ChatWindow } from './ChatWindow.js';
 import styles from './ChatboxWidget.module.css';
 import { ToggleButton } from './ToggleButton.js';
-import { v4 as uuid } from 'uuid';
 
 export function ChatboxWidget({
   agentId,
