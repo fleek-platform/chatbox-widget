@@ -1,19 +1,25 @@
 .avatar {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  border-radius: 4px;
   background-color: var(--neutral-4);
+  border-radius: 4px;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
 }
 
 .small {
-  width: 14px;
-  height: 14px;
+  height: var(--spacing-3-5);
+  width: var(--spacing-3-5);
 }
 
 .normal {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
+  height: var(--spacing-6-5);
+  width: var(--spacing-6-5);
+}
+
+.large {
+  border-radius: var(--radius-3xl);
+  height: var(--sizing-4xl);
+  width: var(--sizing-4xl);
 }

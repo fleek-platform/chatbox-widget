@@ -3,7 +3,7 @@ import styles from './GenericAvatar.module.css';
 import Silhouette from './icons/Silhouette';
 
 export interface GenericAvatarProps {
-  size: 'small' | 'normal';
+  size: 'small' | 'normal' | 'large';
   className?: string;
 }
 

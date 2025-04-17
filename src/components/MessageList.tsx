@@ -56,7 +56,7 @@ export function MessageList({
       ) : isLoading ? (
         <LoadingState widgetState={widgetState} />
       ) : messages.length === 0 && !isTyping ? (
-        <EmptyState agentName={agentName} />
+        <EmptyState agentName={agentName} agentAvatar={agentAvatar} />
       ) : (
         <div className={styles.messageList}>
           {messages.map((message) => (

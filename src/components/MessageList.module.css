@@ -1,12 +1,12 @@
 .container {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   overflow-y: auto;
   padding: 16px;
-  display: flex;
-  flex-direction: column;
   position: relative;
-  scrollbar-width: thin;
   scrollbar-color: var(--neutral-7) transparent;
+  scrollbar-width: thin;
 }
 
 .container::-webkit-scrollbar {
@@ -30,20 +30,20 @@
 }
 
 .container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 20px;
   background: linear-gradient(
     to bottom,
     rgba(18, 18, 18, 0.9),
     /* We'll keep these as rgba values since they're specific to the gradient */
     rgba(18, 18, 18, 0) /* and would be less clear as variables */
   );
-  pointer-events: none;
+  content: "";
+  height: 20px;
+  left: 0;
   opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
   transition: opacity 0.2s ease;
   z-index: 1;
 }

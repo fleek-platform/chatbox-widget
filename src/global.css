@@ -1,3 +1,6 @@
+/* IBM Plex Sans from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+
 :root {
   /* ------ FLEEK PRIMITIVES ------ */
   /* Neutral */
@@ -45,37 +48,51 @@
   /* ------ FLEEK TOKENS ------ */
   /* ------ SPACING ------ */
   --spacing-0: 0;
+  --spacing-0-5: 2px;
   --spacing-1: 4px;
+  --spacing-1-5: 5px;
   --spacing-2: 6px;
   --spacing-2-5: 8px;
   --spacing-3: 12px;
+  --spacing-3-5: 14px;
   --spacing-4: 16px;
   --spacing-5: 20px;
   --spacing-6: 24px;
+  --spacing-6-5: 32px;
   --spacing-7: 36px;
+  --spacing-7-5: 40px;
   --spacing-8: 48px;
   --spacing-9: 56px;
   --spacing-99: 175px;
 
   /* ------ RADIUS ------ */
   --radius-none: 0;
-  --radius-sm: 4px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-  --radius-3xl: 360px;
+  --radius-3xl: 50%;
 
   /* ------ SIZING ------ */
-  --sizing-2xs: 10px;
-  --sizing-xs: 12px;
+  --sizing-2xs: 8.176px;
+  --sizing-xs: 11.447px;
   --sizing-sm: 14px;
-  --sizing-md: 16px;
+  --sizing-md: 16.353px;
   --sizing-lg: 18px;
   --sizing-xl: 20px;
   --sizing-2xl: 26px;
   --sizing-3xl: 34px;
   --sizing-4xl: 48px;
-  --sizing-5xl: 76px;
+  --sizing-5xl: 60px;
+  --sizing-6xl: 76px;
+
+  /* ------ TYPOGRAPHY ------ */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   /* Base Theme Colors */
   --color-primary: #708cff;
@@ -93,15 +110,13 @@
 #fleek-chatbox-container *,
 .fleek-chatbox * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif !important;
 }
 
 #fleek-chatbox-container,
 .fleek-chatbox {
   all: initial; /* Reset styles */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  line-height: normal;
   color: var(--neutral-12); /* Apply base text color */
+  font-family: "IBM Plex Sans", sans-serif !important;
+  line-height: normal;
 }
