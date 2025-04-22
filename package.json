@@ -12,10 +12,7 @@
       "types": "./dist/npm/index.d.ts"
     }
   },
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "type": "module",
   "scripts": {
     "build": "npm run clean:dist && rollup -c",
@@ -72,8 +69,6 @@
     "uuid": "^11.1.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "npm run fix:style"
-    ]
+    "*.{js,jsx,ts,tsx}": ["npm run fix:style"]
   }
 }

@@ -1,3 +1,4 @@
+import { AVATAR_LOCATION } from './configs.js';
 import type { Message, RestApiHost, ScriptParams } from './types.js';
 
 export function getApiBaseUrl(restApiHost?: RestApiHost): string {
@@ -90,4 +91,10 @@ export const isValidUrl = (urlString: string) => {
     return false;
   }
   return url.protocol === 'http:' || url.protocol === 'https:';
+};
+
+export const getAvatarUrl = (avatarRef: string) => {
+  return isValidUrl(avatarRef)
+    ? avatarRef
+    : `${AVATAR_LOCATION}/${avatarRef}.webp`;
 };

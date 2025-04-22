@@ -1,44 +1,36 @@
 /* Based on MessageItem.module.css */
 .messageItem {
-  display: flex;
-  gap: 12px;
   align-items: flex-start;
-  margin-bottom: 12px;
-}
-
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  object-fit: cover;
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
 }
 
 .contentContainer {
-  min-width: 0;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  flex-grow: 1;
+  gap: var(--spacing-1);
+  min-width: 0;
 }
 
 .header {
-  display: flex;
   align-items: center;
-  gap: 8px;
+  display: flex;
+  gap: var(--spacing-2-5);
 }
 
 .name {
-  font-weight: 500;
-  font-size: 11px;
   color: var(--neutral-12);
+  font-size: var(--sizing-xs);
+  font-weight: var(--font-weight-medium);
 }
 
 .typingContent {
-  word-break: break-word;
-  overflow-wrap: break-word;
-  font-size: 11px;
-  color: var(--neutral-11); /* Light grey color */
-  word-wrap: break-word;
+  color: var(--neutral-11);
   display: inline-block;
+  font-size: var(--sizing-xs);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word;
 }

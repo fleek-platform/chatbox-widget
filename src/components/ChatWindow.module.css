@@ -1,16 +1,16 @@
 .chatWindow {
-  width: 350px;
-  height: 500px;
-  border-radius: 8px;
+  animation: slideIn 0.3s ease forwards;
   border: 1px solid var(--neutral-6);
+  border-radius: var(--radius-md);
+  bottom: var(--sizing-4xl);
   display: grid;
   grid-template-rows: auto 1fr auto;
-  position: absolute;
-  bottom: 60px;
-  right: 0;
+  height: 500px;
   overflow: hidden;
-  animation: slideIn 0.3s ease forwards;
+  position: absolute;
+  right: 0;
   transform-origin: bottom right;
+  width: 350px;
   z-index: 10000;
 }
 
@@ -28,7 +28,7 @@
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(var(--spacing-5)) scale(0.95);
   }
   to {
     opacity: 1;
@@ -38,28 +38,28 @@
 
 @media (max-width: 480px) {
   .chatWindow {
-    width: calc(100vw - 40px);
-    height: calc(100vh - 120px);
-    max-height: 500px;
     bottom: 70px;
-    right: 0;
+    height: calc(100vh - 120px);
     left: 0;
     margin: 0 auto;
+    max-height: 500px;
+    right: 0;
+    width: calc(100vw - var(--spacing-7-5));
   }
 }
 
 .footer {
-  padding: 8px 0;
-  text-align: center;
-  font-size: 12px;
-  color: var(--neutral-11);
+  align-items: center;
   background: var(--neutral-3);
   border-top: 1px solid var(--neutral-6);
+  color: var(--neutral-11);
   display: flex;
-  width: 100%;
+  font-size: var(--sizing-xs);
+  gap: var(--spacing-1-5);
+  height: var(--sizing-sm);
   justify-content: center;
-  align-items: center;
-  gap: 5px;
-  height: 14px;
+  padding: var(--spacing-2-5) 0;
+  text-align: center;
   text-decoration: none;
+  width: 100%;
 }
